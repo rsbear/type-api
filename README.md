@@ -8,9 +8,11 @@ Prerequisites: Docker
 ## Start
 
 In terminal
-``git clone https://github.com/rsbear/type-api.git
+```
+git clone https://github.com/rsbear/type-api.git
 cd type-api-master
-yarn && yarn install``
+yarn && yarn install
+```
 
 ### Create the database using [Docker](https://www.docker.com/)
 ``docker-compose up -d``
