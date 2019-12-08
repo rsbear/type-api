@@ -119,4 +119,19 @@ export class KeysetInput implements Partial<Keyset> {
 
   @Field(() => [String])
   details: string[]
+
+  @Field(() => Boolean, { nullable: true })
+  interestCheck: boolean
+
+  @Field(() => Boolean, { nullable: true })
+  groupBuy: boolean
+
+  @Field(() => Boolean, { nullable: true })
+  groupBuySoon: boolean
+
+  @Field(() => Boolean, { nullable: true })
+  market: boolean
+
+  @Field(() => Boolean, { nullable: true })
+  closed: boolean
 }
