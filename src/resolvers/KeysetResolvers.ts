@@ -61,7 +61,7 @@ export class KeysetResolvers {
   };
 
   // @Mutation(() => Boolean)
-  // async updateKeyset(
+  // async updateKeysetStage(
   //   @Arg("id") id: string
   // ) {
   //   await Keyset.update(id, {
