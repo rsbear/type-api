@@ -19,6 +19,10 @@ export class Keyboard extends BaseEntity {
   angle: string
 
   @Field({ nullable: true })
+  @Column("text", { nullable: true })
+  announcement: string;
+
+  @Field({ nullable: true })
   @Column("text")
   brand: string
 
@@ -41,9 +45,6 @@ export class Keyboard extends BaseEntity {
   @Column("text")
   firmware: string
 
-  @Field({ nullable: true })
-  @Column("text", { nullable: true })
-  message: string;
 
   @Field({ nullable: true })
   @Column("text")

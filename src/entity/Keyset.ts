@@ -77,6 +77,27 @@ export class Keyset extends BaseEntity {
   @ManyToOne(() => User, user => user.keyboards)
   @JoinColumn()
   maker: User
+
+  // STAGES
+  @Field({ nullable: true })
+  @Column("boolean", { nullable: true })
+  interestCheck: boolean
+
+  @Field({ nullable: true })
+  @Column("boolean", { nullable: true })
+  market: boolean
+
+  @Field({ nullable: true })
+  @Column("boolean", { nullable: true })
+  groupBuy: boolean
+
+  @Field({ nullable: true })
+  @Column("boolean", { nullable: true })
+  groupBuySoon: boolean
+
+  @Field({ nullable: true })
+  @Column("boolean", { nullable: true })
+  closed: boolean
 }
 
 @InputType()

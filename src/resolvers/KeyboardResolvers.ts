@@ -100,13 +100,13 @@ export class KeyboardResolvers {
   }
 
   @Mutation(() => Boolean)
-  async keyboardMessage(
+  async keyboardAnnouncement(
     @Arg("id") id: string,
-    @Arg("message") message: string
+    @Arg("announcement") announcement: string
   ) {
     try {
       await Keyboard.update(id, {
-        message
+        announcement
       })
       return true
     } catch (err) {
