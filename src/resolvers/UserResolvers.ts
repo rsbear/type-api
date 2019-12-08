@@ -42,7 +42,8 @@ export class UserResolvers {
         'votes',
         'keyboardjoins',
         'follows',
-        'follows.keyboard'
+        'follows.keyboard',
+        'follows.keyset'
       ]
     });
   }
@@ -65,7 +66,8 @@ export class UserResolvers {
           'keyboards',
           'keyboards.joins',
           'follows',
-          'follows.keyboard'
+          'follows.keyboard',
+          'follows.keyset'
         ]
       });
     } catch (err) {

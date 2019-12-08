@@ -3,6 +3,7 @@ import { ObjectType, Field, InputType } from "type-graphql";
 import uniqid from 'uniqid'
 import { User } from "./User";
 import { Keyboard } from "./Keyboard";
+import { Keyset } from "./Keyset";
 
 @ObjectType()
 @Entity("follows")
@@ -13,15 +14,15 @@ export class Follow extends BaseEntity {
 
   @Field({ nullable: true })
   @Column("text", { nullable: true })
-  keyboardId: string
+  productId: string
 
-  @Field(() => String, { nullable: true })
-  @Column("text", { nullable: true })
-  keysetId: string
-
-  @Field(() => Keyboard)
+  @Field(() => Keyboard, { nullable: true })
   @ManyToOne(() => Keyboard, keyboard => keyboard.follows)
   keyboard: Keyboard
+
+  @Field(() => Keyset, { nullable: true })
+  @ManyToOne(() => Keyset, keyset => keyset.follows)
+  keyset: Keyset
 
   @ManyToOne(() => User, user => user.follows, { onDelete: 'CASCADE' })
   @JoinColumn()
@@ -31,8 +32,5 @@ export class Follow extends BaseEntity {
 @InputType()
 export class FollowInput implements Partial<Follow> {
   @Field({ nullable: true })
-  keyboardId: string;
-
-  @Field({ nullable: true })
-  keysetId: string;
+  productId: string;
 }

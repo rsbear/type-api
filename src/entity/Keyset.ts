@@ -4,6 +4,7 @@ import uniqid from 'uniqid'
 import shortid from 'shortid'
 import { User } from "./User";
 import { Kit, KitInput } from "./Kit";
+import { Follow } from './Follow'
 import { Color, ColorInput } from "./Color";
 
 
@@ -98,6 +99,9 @@ export class Keyset extends BaseEntity {
   @Field({ nullable: true })
   @Column("boolean", { nullable: true })
   closed: boolean
+
+  @OneToMany(() => Follow, follow => follow.keyset)
+  follows: Follow
 }
 
 @InputType()
