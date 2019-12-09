@@ -19,6 +19,7 @@ import { KeysetResolvers } from './resolvers/KeysetResolvers'
 import { EditionResolvers } from './resolvers/EditionResolvers';
 import { VoteResolvers } from './resolvers/VoteResolvers';
 import { JoinKeyboardResolver } from './resolvers/JoinKeyboardResolver';
+import { JoinKeysetResolver } from './resolvers/JoinKeysetResolver';
 import { PostResolver } from './resolvers/PostResolver';
 import { FollowResolvers } from './resolvers/FollowResolvers';
 
@@ -79,6 +80,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
         EditionResolvers,
         VoteResolvers,
         JoinKeyboardResolver,
+        JoinKeysetResolver,
         PostResolver,
         FollowResolvers,
       ]

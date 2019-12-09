@@ -6,6 +6,7 @@ import { User } from "./User";
 import { Kit, KitInput } from "./Kit";
 import { Follow } from './Follow'
 import { Color, ColorInput } from "./Color";
+import { JoinKeyset } from './JoinKeyset'
 
 
 @ObjectType()
@@ -78,6 +79,10 @@ export class Keyset extends BaseEntity {
   @ManyToOne(() => User, user => user.keyboards)
   @JoinColumn()
   maker: User
+
+  @Field(() => [JoinKeyset], { nullable: true })
+  @OneToMany(() => JoinKeyset, joinkeyset => joinkeyset.keyset, { onDelete: "CASCADE" })
+  joins: JoinKeyset[]
 
   // STAGES
   @Field({ nullable: true })

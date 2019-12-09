@@ -41,6 +41,8 @@ export class UserResolvers {
         'keyboards',
         'votes',
         'keyboardjoins',
+        'keysetjoins',
+        'keysetjoins.keyset',
         'follows',
         'follows.keyboard',
         'follows.keyset'
@@ -65,6 +67,7 @@ export class UserResolvers {
           'keyboardjoins.keyboard',
           'keyboards',
           'keyboards.joins',
+          'keysetjoins',
           'follows',
           'follows.keyboard',
           'follows.keyset'

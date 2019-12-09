@@ -45,9 +45,9 @@ export class KitInput implements Partial<Kit> {
   @Field({ nullable: true })
   name: string;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   price: number;
 
-  @Field(() => Int)
+  @Field(() => Int, { nullable: true })
   suggestedPrice: number;
 }

@@ -20,7 +20,12 @@ export class KeysetResolvers {
   keyset(@Arg("shortId") shortId: string) {
     return Keyset.findOne({
       where: { shortId },
-      relations: ['kits', 'maker', 'colors',],
+      relations: [
+        'kits',
+        'maker',
+        'colors',
+        'joins',
+      ],
     })
   }
 

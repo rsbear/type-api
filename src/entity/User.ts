@@ -3,6 +3,7 @@ import { ObjectType, Field, } from "type-graphql";
 import { Keyboard } from "./Keyboard";
 import { Vote } from "./Vote";
 import { JoinKeyboard } from "./JoinKeyboard";
+import { JoinKeyset } from "./JoinKeyset";
 import { Follow } from "./Follow";
 
 @ObjectType()
@@ -38,4 +39,8 @@ export class User extends BaseEntity {
   @Field(() => [JoinKeyboard])
   @OneToMany(() => JoinKeyboard, joinkb => joinkb.user)
   keyboardjoins: JoinKeyboard[]
+
+  @Field(() => [JoinKeyset])
+  @OneToMany(() => JoinKeyset, joinset => joinset.user)
+  keysetjoins: JoinKeyset[]
 }
