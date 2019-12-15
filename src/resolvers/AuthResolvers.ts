@@ -6,6 +6,7 @@ import {
 } from "type-graphql";
 import { rword } from 'rword'
 import { Auth } from "./../entity/Auth";
+import { User } from "./../entity/User";
 
 // @ObjectType()
 // class LoginResponse {
@@ -29,13 +30,21 @@ export class AuthResolvers {
     @Arg("email") email: string,
   ) {
     try {
+      const user = await User.findOne({ where: { email } });
+
+      if (!user) {
+        throw new Error("Invalid email")
+      }
+
       if (email) {
         await Auth.delete({ email: email })
       }
+
       await Auth.insert({
         email,
         secret: rword.generate(1, { length: 5 }).toString()
       });
+
     } catch (err) {
       console.log(err);
       return false;

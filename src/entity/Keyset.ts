@@ -7,6 +7,7 @@ import { Kit, KitInput } from "./Kit";
 import { Follow } from './Follow'
 import { Color, ColorInput } from "./Color";
 import { JoinKeyset } from './JoinKeyset'
+import { Post } from './Post'
 
 
 @ObjectType()
@@ -83,6 +84,10 @@ export class Keyset extends BaseEntity {
   @Field(() => [JoinKeyset], { nullable: true })
   @OneToMany(() => JoinKeyset, joinkeyset => joinkeyset.keyset, { onDelete: "CASCADE" })
   joins: JoinKeyset[]
+
+  @Field(() => [Post], { nullable: true })
+  @OneToMany(() => Post, post => post.keyset, { onDelete: "CASCADE" })
+  posts: Post[]
 
   // STAGES
   @Field({ nullable: true })

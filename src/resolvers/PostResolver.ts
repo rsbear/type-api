@@ -2,6 +2,7 @@ import { Resolver, Query, Mutation, Arg, UseMiddleware, Ctx } from "type-graphql
 import { checkAuth } from "../checkAuth";
 import { AppContext } from "../AppContext";
 import { Keyboard } from "../entity/Keyboard";
+import { Keyset } from "../entity/Keyset";
 import { User } from "../entity/User";
 import { Post } from '../entity/Post'
 
@@ -20,18 +21,29 @@ export class PostResolver {
     @Arg("body") body: string,
   ) {
     try {
-      const keyboard = await Keyboard.findOne({ id })
       const user = await User.findOne(payload!.userId)
 
       if (!user) {
         return false
       }
 
-      await Post.insert({
-        body,
-        keyboard,
-        user
-      })
+      if (id.includes("kb_")) {
+        const keyboard = await Keyboard.findOne({ id })
+        await Post.insert({
+          body,
+          keyboard,
+          user
+        })
+      }
+
+      if (id.includes("set_")) {
+        const keyset = await Keyset.findOne({ id })
+        await Post.insert({
+          body,
+          keyset,
+          user
+        })
+      }
 
       return true
     } catch (err) {

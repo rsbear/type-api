@@ -105,11 +105,11 @@ export class UserResolvers {
     const auth: any = await Auth.findOne({ where: { email } });
 
     if (!user) {
-      throw new Error("could not find user");
+      throw new Error("could not find email");
     }
 
     if (secret !== auth.secret) {
-      throw new Error("User found but you don't know the magic word")
+      throw new Error("User found but that's not the magic word")
     }
 
     sendRefreshToken(res, createRefreshToken(user));

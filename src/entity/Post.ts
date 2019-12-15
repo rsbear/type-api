@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, CreateDateColumn, ManyToOne, JoinColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
 import { Keyboard } from "./Keyboard";
+import { Keyset } from "./Keyset";
 import { User } from "./User";
 
 @ObjectType()
@@ -19,17 +20,17 @@ export class Post extends BaseEntity {
   @CreateDateColumn()
   created: Date
 
-  @ManyToOne(() => Keyboard, keyboard => keyboard.posts, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Keyboard, keyboard => keyboard.posts, { nullable: true, onDelete: 'CASCADE' })
   @JoinColumn()
   keyboard: Keyboard;
+
+  @ManyToOne(() => Keyset, keyset => keyset.posts, { nullable: true, onDelete: 'CASCADE' })
+  @JoinColumn()
+  keyset: Keyset;
 
   @Field(() => User)
   @ManyToOne(() => User)
   @JoinColumn()
   user: User
 
-
-  // @ManyToOne(() => Keyset, keyset => keyset.posts, { onDelete: 'CASCADE' })
-  // @JoinColumn()
-  // keyset: Keyset;
 }
