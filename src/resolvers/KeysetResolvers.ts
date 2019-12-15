@@ -25,6 +25,8 @@ export class KeysetResolvers {
         'maker',
         'colors',
         'joins',
+        'posts',
+        'posts.user'
       ],
     })
   }
