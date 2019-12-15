@@ -68,6 +68,8 @@ export class UserResolvers {
           'keyboards',
           'keyboards.joins',
           'keysetjoins',
+          'keysets',
+          'keyset.joins',
           'follows',
           'follows.keyboard',
           'follows.keyset'
