@@ -1,6 +1,7 @@
 import { Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany } from "typeorm";
 import { ObjectType, Field, } from "type-graphql";
 import { Keyboard } from "./Keyboard";
+import { Keyset } from "./Keyset";
 import { Vote } from "./Vote";
 import { JoinKeyboard } from "./JoinKeyboard";
 import { JoinKeyset } from "./JoinKeyset";
@@ -27,6 +28,10 @@ export class User extends BaseEntity {
   @OneToMany(() => Keyboard, keyboard => keyboard.maker)
   @Field(() => [Keyboard])
   keyboards: Keyboard[]
+
+  @OneToMany(() => Keyset, keyset => keyset.maker)
+  @Field(() => [Keyset])
+  keysets: Keyset[]
 
   @Field(() => [Vote])
   @OneToMany(() => Vote, vote => vote.user)

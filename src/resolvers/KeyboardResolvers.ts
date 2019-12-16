@@ -75,11 +75,14 @@ export class KeyboardResolvers {
   }
 
   @Mutation(() => Boolean)
+  @UseMiddleware(checkAuth)
   async updateKeyboard(
+    // @Ctx() { payload }: AppContext,
     @Arg("id") id: string,
     @Arg("data") data: KeyboardInput,
   ) {
     try {
+      // const user = await User.findOne(payload!.userId);
       const { editions, ...rest } = data
       await Keyboard.update(id, {
         ...rest

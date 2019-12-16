@@ -67,6 +67,24 @@ export class KeysetResolvers {
     }
   };
 
+  @Mutation(() => Boolean)
+  @UseMiddleware(checkAuth)
+  async updateKeyset(
+    @Arg("id") id: string,
+    @Arg("data") data: KeysetInput
+  ) {
+    try {
+      const { ...rest } = data
+      await Keyset.update(id, {
+        ...rest
+      })
+      return true
+    } catch (err) {
+      console.log(err)
+      return false
+    }
+  }
+
   // @Mutation(() => Boolean)
   // async updateKeysetStage(
   //   @Arg("id") id: string
