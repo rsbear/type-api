@@ -25,6 +25,8 @@ class LoginResponse {
   user: User;
 }
 
+
+
 @Resolver()
 export class UserResolvers {
   @Query(() => String)
@@ -130,6 +132,7 @@ export class UserResolvers {
   ) {
     try {
       const authSecret: any = await Auth.findOne({ where: { email } })
+
       if (authSecret.secret === secret) {
         await User.insert({
           email,
