@@ -2,7 +2,6 @@ import 'dotenv/config';
 import 'reflect-metadata'
 import express from "express";
 import { ApolloServer } from 'apollo-server-express'
-// import { graphqlUploadExpress } from 'graphql-upload';
 import { buildSchema } from 'type-graphql'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
@@ -32,9 +31,6 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
     credentials: true
   }))
   app.use(cookieParser())
-  // app.use(
-  //   graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 16 })
-  // )
   app.get("/", (_req, res) => res.send("check 1 2"))
   app.post("/refresh_token", async (req, res) => {
     const token = req.cookies.rfs
@@ -91,7 +87,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
-    console.log('🚀 ------ FUCK THIS UP http://localhost:4000/graphql')
+    console.log('🚀 ------ UP UP AND AWAY http://localhost:4000/graphql')
   })
 })();
 
