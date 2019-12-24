@@ -10,15 +10,10 @@
   },
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
+    "start": "nodemon --exec ts-node src/index.ts",
     "migration:create": "run migration:create -n all",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n all",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
-    "install": "",
-    "build-ts": "tsc",
-    "postinstall": "npm run build-ts",
-    "start": "nodemon --exec ts-node src/index.ts",
-    "serve": "NODE_ENV='production' node ./dist/src/index.js",
-    "watch-ts": "tsc -w"
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "dependencies": {
     "@jorgeferrero/stream-to-buffer": "^1.0.0",
@@ -50,6 +45,7 @@
     "@types/cookie-parser": "^1.4.2",
     "@types/cors": "^2.8.6",
     "@types/express": "^4.17.2",
+    "@types/graphql": "^14.5.0",
     "@types/imagemin": "^7.0.0",
     "@types/imagemin-mozjpeg": "^8.0.0",
     "@types/jsonwebtoken": "^8.3.5",
