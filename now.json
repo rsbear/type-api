@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "env": {
+    "API": "@type-api",
+    "CLIENT": "@client"
+  },
+  "builds": [
+    {
+      "src": "src/index.ts",
+      "use": "@now/node@canary",
+      "config": {
+        "maxLambdaSize": "25mb"
+      }
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "src/index.ts"
+    }
+  ]
+}
