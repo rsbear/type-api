@@ -5,12 +5,20 @@
   "author": "rsbear",
   "license": "MIT",
   "private": false,
+  "engines": {
+    "node": "12.x"
+  },
   "scripts": {
     "dev": "nodemon --exec ts-node src/index.ts",
-    "start": "nodemon --exec ts-node src/index.ts",
     "migration:create": "run migration:create -n all",
     "migration:generate": "ts-node ./node_modules/typeorm/cli.js migration:generate -n all",
-    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run"
+    "migration:run": "ts-node ./node_modules/typeorm/cli.js migration:run",
+    "install": "",
+    "build-ts": "tsc",
+    "postinstall": "npm run build-ts",
+    "start": "nodemon --exec ts-node src/index.ts",
+    "serve": "NODE_ENV='production' node ./dist/src/index.js",
+    "watch-ts": "tsc -w"
   },
   "dependencies": {
     "@jorgeferrero/stream-to-buffer": "^1.0.0",

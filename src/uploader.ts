@@ -14,8 +14,8 @@ export interface Upload {
 }
 
 const client = new S3({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+  accessKeyId: process.env.AWS_KEY_ACCESS,
+  secretAccessKey: process.env.AWS_SECRET_KEY_ACCESS,
 })
 
 
