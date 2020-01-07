@@ -24,7 +24,7 @@ export class Edition extends BaseEntity {
   price: number;
 
   @Field(() => Int, { nullable: true })
-  @Column("int")
+  @Column("int", { nullable: true })
   suggestedPrice: number;
 
   @Field(() => [String], { nullable: true })

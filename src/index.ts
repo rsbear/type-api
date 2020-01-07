@@ -87,7 +87,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   apolloServer.applyMiddleware({ app, cors: false });
 
   app.listen(4000, () => {
-    console.log('🚀 ------ UP UP AND AWAY http://localhost:4000/graphql')
+    console.log('🚀 ------ UP UP AND AWAY')
   })
 })();
 

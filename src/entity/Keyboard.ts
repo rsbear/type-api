@@ -39,12 +39,9 @@ export class Keyboard extends BaseEntity {
   @OneToMany(() => Edition, edition => edition.keyboard, { cascade: true, onDelete: "CASCADE" })
   editions: Edition[]
 
-
-
   @Field({ nullable: true })
   @Column("text")
   firmware: string
-
 
   @Field({ nullable: true })
   @Column("text")
@@ -140,7 +137,6 @@ export class Keyboard extends BaseEntity {
   @Field(() => [JoinKeyboard], { nullable: true })
   @OneToMany(() => JoinKeyboard, joinkeyboard => joinkeyboard.keyboard, { onDelete: "CASCADE" })
   joins: JoinKeyboard[]
-
 
   @Field(() => [Post], { nullable: true })
   @OneToMany(() => Post, post => post.keyboard, { onDelete: "CASCADE" })

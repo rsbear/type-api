@@ -20,7 +20,7 @@ export class KeyboardResolvers {
   keyboard(@Arg("shortId") shortId: string) {
     return Keyboard.findOne({
       where: { shortId },
-      relations: ['editions', 'maker', 'posts', 'posts.user'],
+      relations: ['editions', 'maker', 'posts', 'posts.user', 'joins'],
     })
   }
 
