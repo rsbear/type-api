@@ -6,10 +6,12 @@ import { buildSchema } from 'type-graphql'
 import cors from 'cors'
 import cookieParser from 'cookie-parser'
 import { verify } from 'jsonwebtoken';
-import { createConnection } from 'typeorm';
+import { ConnectionOptions, createConnection } from 'typeorm';
 import { User } from './entity/User'
 import { createAccessToken, createRefreshToken } from './tokenGenerators'
 import { sendRefreshToken } from './sendRefreshToken'
+import * as entities from "./entity";
+import { values } from 'lodash'
 
 import { UserResolvers } from './resolvers/UserResolvers'
 import { AuthResolvers } from './resolvers/AuthResolvers'
@@ -27,7 +29,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 (async () => {
   const app = express()
   app.use(cors({
-    origin: 'http://localhost:3000',
+    origin: process.env.NODE_ENV !== "production" ? 'http://localhost:3000' : 'https://typefeel.com',
     credentials: true
   }))
   app.use(cookieParser())
@@ -63,7 +65,33 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
     return res.send({ ok: true, accessToken: createAccessToken(user) });
   })
 
-  await createConnection()
+  const dbConfig: ConnectionOptions = {
+    type: "postgres",
+    entities: values(entities),
+    // ...(process.env.DB_URL
+    //   ? {
+    // url: process.env.DB_URL,
+    // }
+    // : {
+    host: process.env.TYPEORM_HOST,
+    username: process.env.TYPEORM_USERNAME || "doadmin",
+    password: process.env.TYPEORM_PASSWORD,
+    database: process.env.TYPEORM_DATABASE || "defaultdb",
+    port: parseInt(process.env.TYPEORM_PORT!) || 5432,
+    extra: {
+      ssl: true
+    },
+    // }),
+    synchronize: true,
+    logging: false,
+    logger: "file",
+  };
+
+
+
+  await createConnection(dbConfig).catch((error: any) => {
+    console.log(error)
+  })
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
@@ -86,7 +114,9 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  app.listen(4000, () => {
+  const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000
+
+  app.listen(PORT, () => {
     console.log('🚀 ------ UP UP AND AWAY')
   })
 })();

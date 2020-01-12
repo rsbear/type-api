@@ -1,34 +1,32 @@
 {
   "version": 2,
-  "env": {
-    "ACCESS_TOKEN_SECRET": "@access_token_secret",
-    "REFRESH_TOKEN_SECRET": "@refresh_token_secret",
-    "AWS_KEY_ACCESS": "@aws_key_access",
-    "AWS_SECRET_KEY_ACCESS": "@aws_secret_key_access",
-    "TYPEORM_CONNECTION": "@typeorm_connection",
-    "TYPEORM_HOST": "@typeorm_host",
-    "TYPEORM_USERNAME": "@typeorm_username",
-    "TYPEORM_PASSWORD": "@typeorm_password",
-    "TYPEORM_DATABASE": "@typeorm_database",
-    "TYPEORM_PORT": "@typeorm_port",
-    "TYPEORM_SYNCHRONIZE": "@typeorm_synchronize",
-    "TYPEORM_LOGGING": "@typeorm_logging",
-    "TYPEORM_ENTITIES": "@typeorm_entities",
-    "TYPEORM_DRIVER_EXTRA": "@typeorm_driver_extra"
+    "env": {
+      "DB_URL": "@db_url",
+      "ACCESS_TOKEN_SECRET": "@access_token_secret",
+      "REFRESH_TOKEN_SECRET": "@refresh_token_secret",
+      "AWS_KEY_ACCESS": "@aws_key_access",
+      "AWS_SECRET_KEY_ACCESS": "@aws_secret_key_access",
+      "TYPEORM_CONNECTION": "@typeorm_connection",
+      "TYPEORM_HOST": "@typeorm_host",
+      "TYPEORM_USERNAME": "@typeorm_username",
+      "TYPEORM_PASSWORD": "@typeorm_password",
+      "TYPEORM_DATABASE": "@typeorm_database",
+      "TYPEORM_PORT": "@typeorm_port",
+      "TYPEORM_SYNCHRONIZE": "@typeorm_synchronize",
+      "TYPEORM_LOGGING": "@typeorm_logging",
+      "TYPEORM_ENTITIES": "@typeorm_entities",
+      "TYPEORM_DRIVER_EXTRA": "@typeorm_driver_extra"
   },
   "builds": [
     {
-      "src": "src/index.ts",
-      "use": "@now/node@canary",
-      "config": {
-        "maxLambdaSize": "25mb"
-      }
+      "src": "public/api/index.js",
+      "use": "@now/node@canary"
     }
   ],
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "src/index.ts"
+      "dest": "public/api/index.js"
     }
   ]
 }
