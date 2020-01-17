@@ -118,6 +118,8 @@ export class UserResolvers {
 
     sendRefreshToken(res, createRefreshToken(user));
 
+    await Auth.delete({ id: auth.id })
+
     return {
       accessToken: createAccessToken(user),
       user
@@ -132,9 +134,9 @@ export class UserResolvers {
     @Ctx() { res }: AppContext
   ): Promise<LoginResponse> {
     try {
-      const authSecret: any = await Auth.findOne({ where: { email } })
+      const auth: any = await Auth.findOne({ where: { email } })
 
-      if (authSecret.secret !== secret) {
+      if (auth.secret !== secret) {
         console.log("secrets didnt match")
         throw new Error("Fake news")
       }
@@ -145,6 +147,8 @@ export class UserResolvers {
       }).save();
 
       sendRefreshToken(res, createRefreshToken(user));
+
+      await Auth.delete({ id: auth.id })
 
       return {
         accessToken: createAccessToken(user),

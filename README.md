@@ -1,4 +1,4 @@
-# typefeel
+# type-api for typefeel.com
 
 This is the backend repo for typefeel, a web application for keyboard enthusiasts.
 The client repo can be found here [https://github.com/rsbear/typefeel](https://github.com/rsbear/typefeel)
