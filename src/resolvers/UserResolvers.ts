@@ -21,7 +21,7 @@ import { Auth } from "./../entity/Auth";
 class LoginResponse {
   @Field()
   accessToken: string;
-  @Field(() => User)
+  @Field(() => User, { nullable: true })
   user: User;
 }
 
@@ -124,30 +124,37 @@ export class UserResolvers {
     };
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => LoginResponse)
   async signup(
     @Arg("secret") secret: string,
     @Arg("email") email: string,
     @Arg("username") username: string,
-  ) {
+    @Ctx() { res }: AppContext
+  ): Promise<LoginResponse> {
     try {
       const authSecret: any = await Auth.findOne({ where: { email } })
 
-      if (authSecret.secret === secret) {
-        await User.insert({
-          email,
-          username
-        });
-      } else {
+      if (authSecret.secret !== secret) {
         console.log("secrets didnt match")
-        return false
+        throw new Error("Fake news")
       }
+
+      const user = await User.create({
+        email,
+        username
+      }).save();
+
+      sendRefreshToken(res, createRefreshToken(user));
+
+      return {
+        accessToken: createAccessToken(user),
+        user
+      };
+
     } catch (err) {
       console.log(err);
-      return false;
+      throw new Error("failed at catch")
     }
-
-    return true;
   }
 
   @Mutation(() => Boolean)

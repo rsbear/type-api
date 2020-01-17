@@ -52,7 +52,7 @@ export class AuthResolvers {
       await Auth.insert({
         email,
         secret: rword.generate(1, { length: 5 }).toString()
-      });
+      })
 
     } catch (err) {
       console.log(err);

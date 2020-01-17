@@ -77,7 +77,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
     username: process.env.TYPEORM_USERNAME || "doadmin",
     password: process.env.TYPEORM_PASSWORD,
     database: process.env.TYPEORM_DATABASE || "defaultdb",
-    port: parseInt(process.env.TYPEORM_PORT!) || 5432,
+    port: 25060 || 5432,
     extra: {
       ssl: true
     },

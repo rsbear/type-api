@@ -46,7 +46,7 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     app.use(cors_1.default({
-        origin: 'https://typefeel.com' || 'http://locahost:3000',
+        origin: process.env.NODE_ENV !== "production" ? 'http://localhost:3000' : 'https://typefeel.com',
         credentials: true
     }));
     app.use(cookie_parser_1.default());
@@ -78,9 +78,9 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
         type: "postgres",
         entities: lodash_1.values(entities),
         host: process.env.TYPEORM_HOST,
-        username: "doadmin" || "doadmin",
+        username: process.env.TYPEORM_USERNAME || "doadmin",
         password: process.env.TYPEORM_PASSWORD,
-        database: "defaultdb" || "defaultdb",
+        database: process.env.TYPEORM_DATABASE || "defaultdb",
         port: 25060 || 5432,
         extra: {
             ssl: true
@@ -112,9 +112,6 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
     });
     apolloServer.applyMiddleware({ app, cors: false });
     const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000;
-    console.log(`PORT is ${PORT}`);
-    console.log("host is" + " " + process.env.TYPEORM_HOST);
-    console.log("password is" + " " + process.env.TYPEORM_PASSWORD);
     app.listen(PORT, () => {
         console.log('🚀 ------ UP UP AND AWAY');
     });
