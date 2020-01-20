@@ -1,6 +1,6 @@
-import { Entity, Column, BaseEntity, ManyToOne, JoinColumn, PrimaryColumn } from "typeorm";
+import { Entity, Column, BaseEntity, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm";
 import { ObjectType, Field, InputType } from "type-graphql";
-import uniqid from 'uniqid'
+// import uniqid from 'uniqid'
 import { User } from "./User";
 import { Keyboard } from "./Keyboard";
 import { Keyset } from "./Keyset";
@@ -8,9 +8,9 @@ import { Keyset } from "./Keyset";
 @ObjectType()
 @Entity("follows")
 export class Follow extends BaseEntity {
-  @Field(() => String)
-  @PrimaryColumn("varchar", { default: `${uniqid("flw_")}` })
-  id: string = uniqid("flw_")
+  @Field()
+  @PrimaryGeneratedColumn("uuid")
+  id: string
 
   @Field({ nullable: true })
   @Column("text", { nullable: true })

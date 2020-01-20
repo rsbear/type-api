@@ -33,9 +33,6 @@ export class VoteResolvers {
         const voteExp = dayjs(vote.expiration)
         const nowDate = dayjs(new Date)
 
-        console.log(`vote exp ${voteExp}`)
-        console.log(`now time ${nowDate}`)
-
         if (voteExp.isAfter(nowDate)) {
           console.log(`TOO EARLY`)
           throw new Error('Voted already, try again in 5 days')
@@ -44,12 +41,14 @@ export class VoteResolvers {
         await Vote.delete({ id: vote.id })
       }
 
-      console.log(`Making new vote`)
+      // make new vote
       await Vote.insert({
         editionId: id,
         user
-      })
-      const newPrice = Math.trunc(edition.suggestedPrice + (edition.suggestedPrice * .03))
+      });
+      const newPrice = edition.suggestedPrice === null ?
+        Math.trunc(edition.price + (edition.price * .03))
+        : Math.trunc(edition.suggestedPrice + (edition.suggestedPrice * .03))
       await Edition.update(id, { suggestedPrice: newPrice })
 
       return true
@@ -94,7 +93,9 @@ export class VoteResolvers {
         editionId: id,
         user
       }).save()
-      const newPrice = Math.trunc(edition.suggestedPrice - (edition.suggestedPrice * .015))
+      const newPrice = edition.suggestedPrice === null ?
+        Math.trunc(edition.price - (edition.price * .015))
+        : Math.trunc(edition.suggestedPrice - (edition.suggestedPrice * .015))
       await Edition.update(id, { suggestedPrice: newPrice })
 
       return true
