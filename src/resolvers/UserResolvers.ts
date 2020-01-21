@@ -43,6 +43,7 @@ export class UserResolvers {
         'keyboards',
         'votes',
         'keyboardjoins',
+        'keyboardjoins.keyboard',
         'keysetjoins',
         'keysetjoins.keyset',
         'follows',
