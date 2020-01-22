@@ -85,19 +85,19 @@ export class KeysetResolvers {
     }
   }
 
-  // @Mutation(() => Boolean)
-  // async updateKeysetStage(
-  //   @Arg("id") id: string
-  // ) {
-  //   await Keyset.update(id, {
-  //     interestCheck: false,
-  //     market: true,
-  //     groupBuy: false,
-  //     groupBuySoon: false,
-  //     closed: false
-  //   })
-  //   return true
-  // }
+  @Mutation(() => Boolean)
+  async updateKeysetStage(
+    @Arg("id") id: string
+  ) {
+    await Keyset.update(id, {
+      interestCheck: false,
+      market: true,
+      groupBuy: false,
+      groupBuySoon: false,
+      closed: false
+    })
+    return true
+  }
 
   @Mutation(() => Boolean)
   async deleteKeyset(
