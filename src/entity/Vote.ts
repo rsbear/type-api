@@ -1,15 +1,19 @@
-import { Entity, Column, BaseEntity, CreateDateColumn, PrimaryColumn, ManyToOne, JoinColumn } from "typeorm";
+import { Entity, Column, BaseEntity, CreateDateColumn, ManyToOne, JoinColumn, PrimaryGeneratedColumn } from "typeorm";
 import { ObjectType, Field } from "type-graphql";
-import uniqid from 'uniqid'
+// import uniqid from 'uniqid'
 import { User } from "./User";
 import dayjs from "dayjs";
 
 @ObjectType()
 @Entity("votes")
 export class Vote extends BaseEntity {
+  // @Field()
+  // @PrimaryColumn("varchar", { default: () => `'${uniqid("vote_")}'` })
+  // id: string = uniqid("vote_");
+
   @Field()
-  @PrimaryColumn("varchar", { default: `${uniqid("vote_")}` })
-  id: string = uniqid("vote_");
+  @PrimaryGeneratedColumn('uuid')
+  id: string;
 
   @Field({ nullable: true })
   @Column("text", { nullable: true })

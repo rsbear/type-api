@@ -138,9 +138,9 @@ export class VoteResolvers {
         kitId: id,
         user
       });
-      const newPrice = kit.suggestedPrice === null ?
-        Math.trunc(kit.price + (kit.price * .03))
-        : Math.trunc(kit.suggestedPrice + (kit.suggestedPrice * .03))
+      const newPrice = kit.suggestedPrice !== null ?
+        Math.trunc(kit.suggestedPrice + (kit.suggestedPrice * .03))
+        : Math.trunc(kit.price + (kit.price * .03))
       console.log(newPrice)
       await Kit.update(id, { suggestedPrice: newPrice })
 
@@ -186,11 +186,11 @@ export class VoteResolvers {
         kitId: id,
         user
       })
-      const newPrice = kit.suggestedPrice === null ?
-        Math.trunc(kit.price - (kit.price * .015))
-        : Math.trunc(kit.suggestedPrice - (kit.suggestedPrice * .015))
+      const newPrice = kit.suggestedPrice !== null ?
+        Math.trunc(kit.suggestedPrice - (kit.suggestedPrice * .015))
+        : Math.trunc(kit.price - (kit.price * .015))
       console.log(newPrice)
-      await Kit.update(id, { suggestedPrice: newPrice })
+      await Kit.update(id, { suggestedPrice: null })
 
       return true
     } catch (err) {
