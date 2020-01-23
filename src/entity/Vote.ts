@@ -11,9 +11,13 @@ export class Vote extends BaseEntity {
   @PrimaryColumn("varchar", { default: `${uniqid("vote_")}` })
   id: string = uniqid("vote_");
 
-  @Field()
-  @Column("text")
+  @Field({ nullable: true })
+  @Column("text", { nullable: true })
   editionId: string;
+
+  @Field({ nullable: true })
+  @Column("text", { nullable: true })
+  kitId: string;
 
   @Field()
   @Column()

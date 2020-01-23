@@ -25,8 +25,8 @@ export class Kit extends BaseEntity {
   price: number;
 
   @Field(() => Int, { nullable: true })
-  @Column("int")
-  suggestedPrice: number;
+  @Column("int", { nullable: true })
+  suggestedPrice: number | null;
 
   @Field(() => String, { nullable: true })
   @Column("text")
