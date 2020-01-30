@@ -190,7 +190,7 @@ export class VoteResolvers {
         Math.trunc(kit.suggestedPrice - (kit.suggestedPrice * .015))
         : Math.trunc(kit.price - (kit.price * .015))
       console.log(newPrice)
-      await Kit.update(id, { suggestedPrice: null })
+      await Kit.update(id, { suggestedPrice: newPrice })
 
       return true
     } catch (err) {
