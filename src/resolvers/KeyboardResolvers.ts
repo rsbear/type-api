@@ -7,6 +7,7 @@ import { SearchInput } from "../entity/SearchInput";
 import { GraphQLUpload } from "graphql-upload";
 import { processUploads } from "../uploader";
 import { Edition } from "../entity/Edition";
+import { SuccessResponse } from "../entity";
 
 
 @Resolver()
@@ -35,17 +36,17 @@ export class KeyboardResolvers {
     }
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => SuccessResponse)
   @UseMiddleware(checkAuth)
   async makeKeyboard(
     @Ctx() { payload }: AppContext,
     @Arg("data", () => KeyboardInput) data: any,
     @Arg("images", () => [GraphQLUpload]) images: any,
-  ) {
+  ): Promise<SuccessResponse> {
     try {
       const user = await User.findOne(payload!.userId);
       const { results600, results800, results1500, resultsRaw } = await processUploads(images)
-      await Keyboard.create({
+      const keyboard = await Keyboard.create({
         ...data,
         maker: user,
         images600: results600,
@@ -53,10 +54,16 @@ export class KeyboardResolvers {
         images1500: results1500,
         imagesRaw: resultsRaw,
       }).save()
-      return true
+      return {
+        success: true,
+        message: keyboard.shortId
+      }
     } catch (err) {
       console.log(err)
-      return false
+      return {
+        success: false,
+        message: "something went wrong"
+      }
     }
   };
 

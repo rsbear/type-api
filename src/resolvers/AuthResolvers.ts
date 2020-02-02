@@ -9,16 +9,6 @@ import { Auth } from "./../entity/Auth";
 import { User } from "./../entity/User";
 import { SuccessResponse } from "./../entity/SuccessResponse";
 
-// @ObjectType()
-// class LoginResponse {
-//   @Field()
-//   accessToken: string;
-//   @Field(() => User)
-//   user: User;
-// }
-
-
-
 @Resolver()
 export class AuthResolvers {
   @Query(() => [Auth])
