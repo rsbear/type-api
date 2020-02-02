@@ -36,11 +36,11 @@ export class Keyset extends BaseEntity {
   stem: string
 
   @Field(() => [Kit], { nullable: true })
-  @OneToMany(() => Kit, kit => kit.keyset, { cascade: true, onDelete: "CASCADE" })
+  @OneToMany(() => Kit, kit => kit.keyset, { onDelete: "CASCADE", onUpdate: 'CASCADE' })
   kits: Kit[]
 
   @Field(() => [Color], { nullable: true })
-  @OneToMany(() => Color, color => color.keyset, { cascade: true, onDelete: "CASCADE" })
+  @OneToMany(() => Color, color => color.keyset, { onDelete: "CASCADE", onUpdate: 'CASCADE' })
   colors: Color[]
 
   // IMGS
@@ -128,7 +128,7 @@ export class KeysetInput implements Partial<Keyset> {
   @Field(() => KitInput)
   kits: Kit[]
 
-  @Field(() => ColorInput)
+  @Field(() => ColorInput, { nullable: true })
   colors: Color[]
 
   @Field(() => [String])

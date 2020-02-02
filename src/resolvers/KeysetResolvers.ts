@@ -7,6 +7,9 @@ import { processUploads } from "../uploader";
 import { SearchInput } from "../entity/SearchInput";
 import { User } from "../entity/User";
 import { Keyset, KeysetInput } from "../entity/Keyset";
+import { Kit, Color } from "../entity";
+// import { getConnection } from "typeorm";
+// import { Kit } from "../entity";
 
 @Resolver()
 export class KeysetResolvers {
@@ -74,9 +77,28 @@ export class KeysetResolvers {
     @Arg("data") data: KeysetInput
   ) {
     try {
-      const { ...rest } = data
+      const { kits, colors, ...rest } = data
+      const keyset = await Keyset.findOne({ where: { id }, relations: ['kits', 'colors'] })
+      if (!keyset) throw new Error("Failed")
+
+      for (let k of keyset.kits) {
+        await Kit.delete(k)
+      }
+      for (let k of data.kits) {
+        const newKit = await Kit.create(k).save()
+        keyset.kits.push(newKit)
+      }
+      for (let c of keyset.colors) {
+        await Color.delete(c)
+      }
+      for (let c of data.colors) {
+        const newColor = await Color.create(c).save()
+        keyset.colors.push(newColor)
+      }
+      keyset.save()
+
       await Keyset.update(id, {
-        ...rest
+        ...rest,
       })
       return true
     } catch (err) {
@@ -108,5 +130,22 @@ export class KeysetResolvers {
       return true
     }
     return false
+  }
+
+  @Query(() => [Kit])
+  async kits() {
+    return Kit.find({ relations: ['keyset'] })
+  }
+
+  @Mutation(() => Boolean)
+  async deleteKit(
+    @Arg("id") id: string
+  ) {
+    try {
+      await Kit.delete({ id })
+      return true
+    } catch (err) {
+      console.log(err)
+    }
   }
 }

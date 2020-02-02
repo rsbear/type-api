@@ -1,7 +1,6 @@
 
 import { Entity, Column, BaseEntity, ManyToOne, JoinColumn, PrimaryColumn } from "typeorm";
 import { ObjectType, Field, InputType, Int } from "type-graphql";
-import shortid from 'shortid'
 import uniqid from 'uniqid'
 import { Keyset } from "./Keyset";
 
@@ -11,10 +10,6 @@ export class Kit extends BaseEntity {
   @Field(() => String)
   @PrimaryColumn("varchar", { default: `${uniqid("kit_")}` })
   id: string = uniqid("kit_")
-
-  @Field(() => String)
-  @Column("varchar", { default: `${shortid.generate()}` })
-  shortId: string = shortid.generate().toString();
 
   @Field({ nullable: true })
   @Column("text", { nullable: true })
@@ -32,7 +27,7 @@ export class Kit extends BaseEntity {
   @Column("text")
   name: string
 
-  @ManyToOne(() => Keyset, keyset => keyset.kits, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Keyset, keyset => keyset.kits, { cascade: true })
   @JoinColumn()
   keyset: Keyset;
 }

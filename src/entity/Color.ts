@@ -18,7 +18,7 @@ export class Color extends BaseEntity {
   @Column("text")
   ral: string
 
-  @ManyToOne(() => Keyset, keyset => keyset.colors, { onDelete: 'CASCADE' })
+  @ManyToOne(() => Keyset, keyset => keyset.colors, { cascade: true })
   @JoinColumn()
   keyset: Keyset;
 }
