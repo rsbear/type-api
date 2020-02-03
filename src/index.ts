@@ -126,6 +126,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   app.listen({ port: process.env.PORT || 4000 }, () => {
     console.log('🚀 ------ UP UP AND AWAY')
+    console.log(process.env.NODE_ENV !== 'production' ? "In development mode" : "Production deployment")
     console.log(process.env.DB_URL)
   })
 })();
