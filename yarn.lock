@@ -130,7 +130,7 @@
     chalk "^2.0.1"
     deepmerge "^2.1.1"
 
-"@sendgrid/mail@^6.2.1", "@sendgrid/mail@^6.5.1":
+"@sendgrid/mail@^6.5.1":
   version "6.5.1"
   resolved "https://registry.yarnpkg.com/@sendgrid/mail/-/mail-6.5.1.tgz#42e01829769407adc3b3290094bc0ce8c74683de"
   integrity sha512-OVHOrMykAy6Zt1xeOT//RhH6ThdPr6nhvkdzwXrKzSu3Ctr7OihIeWrWOGIh7CjGBOTiBWoMgFgVC6Twgr/jHw==
@@ -3741,13 +3741,6 @@ nodemailer-mailgun-transport@^2.0.0:
   dependencies:
     consolidate "^0.15.1"
     mailgun-js "^0.22.0"
-
-nodemailer-sendgrid@^1.0.3:
-  version "1.0.3"
-  resolved "https://registry.yarnpkg.com/nodemailer-sendgrid/-/nodemailer-sendgrid-1.0.3.tgz#8f8786a9fef4faa94c4b0a107547f923e9d6ea85"
-  integrity sha512-To/veO2M4evjtv1XrY7BUgE+LDypgs/FBx4wOHb2UNTpvZhiARtvMaBI0685Yxkho0lIPJc4jS0cUE7v+XGNgg==
-  dependencies:
-    "@sendgrid/mail" "^6.2.1"
 
 nodemailer@^6.4.2:
   version "6.4.2"

@@ -43,7 +43,6 @@
     "lodash": "^4.17.15",
     "nodemailer": "^6.4.2",
     "nodemailer-mailgun-transport": "^2.0.0",
-    "nodemailer-sendgrid": "^1.0.3",
     "now-storage-v2": "^2.0.2",
     "pg": "^7.12.1",
     "reflect-metadata": "^0.1.13",
