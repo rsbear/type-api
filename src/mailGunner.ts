@@ -1,7 +1,7 @@
 import sgMail from '@sendgrid/mail'
 sgMail.setApiKey(process.env.SENDGRID_KEY!);
 
-export default function (userEmail: string, subjectTitle: string, content: any) {
+export default async function (userEmail: string, subjectTitle: string, content: any) {
   const msg = {
     to: userEmail,
     from: 'auth@typefeel.com',
@@ -9,7 +9,7 @@ export default function (userEmail: string, subjectTitle: string, content: any) 
     text: 'and easy to do anywhere, even with Node.js',
     html: content,
   };
-  sgMail.send(msg)
+  await sgMail.send(msg)
     .then(() => {
       console.log('email success')
     })
