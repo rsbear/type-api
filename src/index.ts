@@ -82,7 +82,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
           ssl: true
         },
         entities: [
-          process.env.NODE_ENV !== 'production' ? __dirname + 'src/entity/**/*.ts' : __dirname + '/entity/**/*.js'
+          process.env.NODE_ENV !== 'production' ? __dirname + 'src/entity/**/*.ts' : __dirname + 'public/api/entity/**/*.js'
         ]
       }),
     synchronize: true,
