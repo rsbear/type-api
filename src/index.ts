@@ -114,7 +114,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  const PORT = process.env.NODE_ENV !== "production" && 4000
+  const PORT = process.env.NODE_ENV !== "production" ? 4000 : parseInt("")
 
   app.listen(PORT, () => {
     console.log('🚀 ------ UP UP AND AWAY')
