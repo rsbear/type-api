@@ -82,7 +82,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
           ssl: true
         },
         entities: [
-          process.env.NODE_ENV !== 'production' ? __dirname + '/entity/**/*.ts' : __dirname + '/entity/**/*.js'
+          process.env.NODE_ENV !== 'production' ? __dirname + 'src/entity/**/*.ts' : __dirname + '/entity/**/*.js'
         ]
       }),
     synchronize: true,
@@ -126,6 +126,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   app.listen({ port: process.env.PORT || 4000 }, () => {
     console.log('🚀 ------ UP UP AND AWAY')
+    console.log(process.env.DB_URL)
   })
 })();
 
