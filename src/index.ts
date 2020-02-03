@@ -68,23 +68,22 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   const dbConfig: ConnectionOptions = {
     type: "postgres",
     entities: values(entities),
-    ...(process.env.DB_URL
-      ? {
-        url: process.env.DB_URL,
-      }
-      : {
-        host: process.env.TYPEORM_HOST,
-        username: process.env.TYPEORM_USERNAME || "doadmin",
-        password: process.env.TYPEORM_PASSWORD,
-        database: process.env.TYPEORM_DATABASE || "defaultdb",
-        port: 25060 || 5432,
-        extra: {
-          ssl: true
-        },
-        entities: [
-          process.env.NODE_ENV !== 'production' ? __dirname + 'src/entity/**/*.ts' : __dirname + 'public/api/entity/**/*.js'
-        ]
-      }),
+    // ...(process.env.DB_URL
+    //   ? {
+    //     url: process.env.DB_URL,
+    //   }
+    //   : {
+
+    host: process.env.TYPEORM_HOST,
+    username: process.env.TYPEORM_USERNAME || "doadmin",
+    password: process.env.TYPEORM_PASSWORD,
+    database: process.env.TYPEORM_DATABASE || "defaultdb",
+    port: 25060 || 5432,
+    extra: {
+      ssl: true
+    },
+
+    // }),
     synchronize: true,
     logging: false,
     logger: "file",
