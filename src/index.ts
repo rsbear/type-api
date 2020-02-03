@@ -89,9 +89,14 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
 
 
-  await createConnection(dbConfig).catch((error: any) => {
-    console.log(error)
-  })
+  await createConnection(dbConfig)
+    .then(() => {
+      console.log("connected to db")
+      console.log(process.env.DB_URL)
+    })
+    .catch((error: any) => {
+      console.log(error)
+    })
 
   const apolloServer = new ApolloServer({
     schema: await buildSchema({
