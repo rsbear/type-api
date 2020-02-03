@@ -68,20 +68,20 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   const dbConfig: ConnectionOptions = {
     type: "postgres",
     entities: values(entities),
-    // ...(process.env.DB_URL
-    //   ? {
-    // url: process.env.DB_URL,
-    // }
-    // : {
-    host: process.env.TYPEORM_HOST,
-    username: process.env.TYPEORM_USERNAME || "doadmin",
-    password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE || "defaultdb",
-    port: 25060 || 5432,
-    extra: {
-      ssl: true
-    },
-    // }),
+    ...(process.env.DB_URL
+      ? {
+        url: process.env.DB_URL,
+      }
+      : {
+        host: process.env.TYPEORM_HOST,
+        username: process.env.TYPEORM_USERNAME || "doadmin",
+        password: process.env.TYPEORM_PASSWORD,
+        database: process.env.TYPEORM_DATABASE || "defaultdb",
+        port: 25060 || 5432,
+        extra: {
+          ssl: true
+        },
+      }),
     synchronize: true,
     logging: false,
     logger: "file",
@@ -114,7 +114,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  // const PORT = process.env.NODE_ENV !== "production" ? 4000 : parseInt("")
+  // const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000
 
   app.listen({ port: process.env.PORT || 4000 }, () => {
     console.log('🚀 ------ UP UP AND AWAY')
