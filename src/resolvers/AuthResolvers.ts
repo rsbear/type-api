@@ -95,7 +95,7 @@ export class AuthResolvers {
           </div>
         `;
 
-      mailGunner(user.email, subjectTitle, content);
+      await mailGunner(user.email, subjectTitle, content);
 
       await Auth.insert({
         email,
