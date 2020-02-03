@@ -98,7 +98,7 @@ let AuthResolvers = class AuthResolvers {
                 mailGunner_1.default(user.email, subjectTitle, content);
                 yield Auth_1.Auth.insert({
                     email,
-                    secret: rword_1.rword.generate(1, { length: 5 }).toString()
+                    secret: data.token
                 });
             }
             catch (err) {
