@@ -27,6 +27,19 @@ const Keyset_1 = require("../entity/Keyset");
 const User_1 = require("../entity/User");
 const Follow_1 = require("../entity/Follow");
 const checkAuth_1 = require("../checkAuth");
+let FollowResponse = class FollowResponse {
+};
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", Boolean)
+], FollowResponse.prototype, "success", void 0);
+__decorate([
+    type_graphql_1.Field(() => String),
+    __metadata("design:type", String)
+], FollowResponse.prototype, "id", void 0);
+FollowResponse = __decorate([
+    type_graphql_1.ObjectType()
+], FollowResponse);
 let FollowResolvers = class FollowResolvers {
     follows() {
         return Follow_1.Follow.find({ relations: ['keyboard', 'keyset'] });
@@ -35,98 +48,50 @@ let FollowResolvers = class FollowResolvers {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User_1.User.findOne(payload.userId);
-                console.log(id);
                 if (id.includes("kb_")) {
                     const keyboard = yield Keyboard_1.Keyboard.findOne({ id });
-                    yield Follow_1.Follow.insert({
+                    const follow = yield Follow_1.Follow.create({
                         productId: id,
                         keyboard,
                         user
-                    });
-                    return true;
+                    }).save();
+                    return {
+                        success: true,
+                        id: follow.id
+                    };
                 }
                 if (id.includes("set_")) {
                     const keyset = yield Keyset_1.Keyset.findOne({ id });
-                    yield Follow_1.Follow.insert({
+                    const follow = yield Follow_1.Follow.create({
                         productId: id,
                         keyset,
                         user
-                    });
-                    return true;
+                    }).save();
+                    return {
+                        success: true,
+                        id: follow.id
+                    };
                 }
             }
             catch (err) {
                 console.log(err);
-                return false;
+                throw new Error("something went wrong");
             }
         });
     }
-    followKeyboard({ payload }, id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const keyboard = yield Keyboard_1.Keyboard.findOne({ id });
-                const user = yield User_1.User.findOne(payload.userId);
-                yield Follow_1.Follow.create({
-                    productId: id,
-                    keyboard,
-                    user
-                }).save();
-                return true;
-            }
-            catch (err) {
-                console.log(err);
-                return false;
-            }
-        });
-    }
-    followKeyboardDelete({ payload }, id) {
+    unfollow(id, { payload }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
                 const user = yield User_1.User.findOne(payload.userId);
-                if (!user) {
-                    return false;
-                }
+                if (!user)
+                    throw new Error("Log in");
                 yield Follow_1.Follow.delete({ id });
-                return true;
             }
             catch (err) {
                 console.log(err);
                 return false;
             }
-        });
-    }
-    followKeyset({ payload }, id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const keyset = yield Keyset_1.Keyset.findOne({ id });
-                const user = yield User_1.User.findOne(payload.userId);
-                yield Follow_1.Follow.create({
-                    productId: id,
-                    keyset,
-                    user
-                }).save();
-                return true;
-            }
-            catch (err) {
-                console.log(err);
-                return false;
-            }
-        });
-    }
-    followKeysetDelete({ payload }, id) {
-        return __awaiter(this, void 0, void 0, function* () {
-            try {
-                const user = yield User_1.User.findOne(payload.userId);
-                if (!user) {
-                    return false;
-                }
-                yield Follow_1.Follow.delete({ id });
-                return true;
-            }
-            catch (err) {
-                console.log(err);
-                return false;
-            }
+            return true;
         });
     }
     deleteFollow(id) {
@@ -143,7 +108,7 @@ __decorate([
     __metadata("design:returntype", void 0)
 ], FollowResolvers.prototype, "follows", null);
 __decorate([
-    type_graphql_1.Mutation(() => Boolean),
+    type_graphql_1.Mutation(() => FollowResponse),
     type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
     __param(0, type_graphql_1.Ctx()),
     __param(1, type_graphql_1.Arg("id")),
@@ -154,39 +119,12 @@ __decorate([
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
     type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
-    __param(0, type_graphql_1.Ctx()),
-    __param(1, type_graphql_1.Arg("id")),
+    __param(0, type_graphql_1.Arg("id")),
+    __param(1, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
+    __metadata("design:paramtypes", [String, Object]),
     __metadata("design:returntype", Promise)
-], FollowResolvers.prototype, "followKeyboard", null);
-__decorate([
-    type_graphql_1.Mutation(() => Boolean),
-    type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
-    __param(0, type_graphql_1.Ctx()),
-    __param(1, type_graphql_1.Arg("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], FollowResolvers.prototype, "followKeyboardDelete", null);
-__decorate([
-    type_graphql_1.Mutation(() => Boolean),
-    type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
-    __param(0, type_graphql_1.Ctx()),
-    __param(1, type_graphql_1.Arg("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], FollowResolvers.prototype, "followKeyset", null);
-__decorate([
-    type_graphql_1.Mutation(() => Boolean),
-    type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
-    __param(0, type_graphql_1.Ctx()),
-    __param(1, type_graphql_1.Arg("id")),
-    __metadata("design:type", Function),
-    __metadata("design:paramtypes", [Object, String]),
-    __metadata("design:returntype", Promise)
-], FollowResolvers.prototype, "followKeysetDelete", null);
+], FollowResolvers.prototype, "unfollow", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
     __param(0, type_graphql_1.Arg("id")),

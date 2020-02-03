@@ -40,6 +40,7 @@ const SearchInput_1 = require("../entity/SearchInput");
 const graphql_upload_1 = require("graphql-upload");
 const uploader_1 = require("../uploader");
 const Edition_1 = require("../entity/Edition");
+const entity_1 = require("../entity");
 let KeyboardResolvers = class KeyboardResolvers {
     keyboards() {
         return Keyboard_1.Keyboard.find({ relations: ['editions', 'maker', 'joins'] });
@@ -65,12 +66,18 @@ let KeyboardResolvers = class KeyboardResolvers {
             try {
                 const user = yield User_1.User.findOne(payload.userId);
                 const { results600, results800, results1500, resultsRaw } = yield uploader_1.processUploads(images);
-                yield Keyboard_1.Keyboard.create(Object.assign(Object.assign({}, data), { maker: user, images600: results600, images800: results800, images1500: results1500, imagesRaw: resultsRaw })).save();
-                return true;
+                const keyboard = yield Keyboard_1.Keyboard.create(Object.assign(Object.assign({}, data), { maker: user, images600: results600, images800: results800, images1500: results1500, imagesRaw: resultsRaw })).save();
+                return {
+                    success: true,
+                    message: keyboard.shortId
+                };
             }
             catch (err) {
                 console.log(err);
-                return false;
+                return {
+                    success: false,
+                    message: "something went wrong"
+                };
             }
         });
     }
@@ -149,7 +156,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], KeyboardResolvers.prototype, "sortKeyboards", null);
 __decorate([
-    type_graphql_1.Mutation(() => Boolean),
+    type_graphql_1.Mutation(() => entity_1.SuccessResponse),
     type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
     __param(0, type_graphql_1.Ctx()),
     __param(1, type_graphql_1.Arg("data", () => Keyboard_1.KeyboardInput)),

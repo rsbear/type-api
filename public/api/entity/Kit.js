@@ -14,14 +14,12 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
-const shortid_1 = __importDefault(require("shortid"));
 const uniqid_1 = __importDefault(require("uniqid"));
 const Keyset_1 = require("./Keyset");
 let Kit = class Kit extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
         this.id = uniqid_1.default("kit_");
-        this.shortId = shortid_1.default.generate().toString();
     }
 };
 __decorate([
@@ -29,11 +27,6 @@ __decorate([
     typeorm_1.PrimaryColumn("varchar", { default: `${uniqid_1.default("kit_")}` }),
     __metadata("design:type", String)
 ], Kit.prototype, "id", void 0);
-__decorate([
-    type_graphql_1.Field(() => String),
-    typeorm_1.Column("varchar", { default: `${shortid_1.default.generate()}` }),
-    __metadata("design:type", String)
-], Kit.prototype, "shortId", void 0);
 __decorate([
     type_graphql_1.Field({ nullable: true }),
     typeorm_1.Column("text", { nullable: true }),
@@ -46,8 +39,8 @@ __decorate([
 ], Kit.prototype, "price", void 0);
 __decorate([
     type_graphql_1.Field(() => type_graphql_1.Int, { nullable: true }),
-    typeorm_1.Column("int"),
-    __metadata("design:type", Number)
+    typeorm_1.Column("int", { nullable: true }),
+    __metadata("design:type", Object)
 ], Kit.prototype, "suggestedPrice", void 0);
 __decorate([
     type_graphql_1.Field(() => String, { nullable: true }),
@@ -55,7 +48,7 @@ __decorate([
     __metadata("design:type", String)
 ], Kit.prototype, "name", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => Keyset_1.Keyset, keyset => keyset.kits, { onDelete: 'CASCADE' }),
+    typeorm_1.ManyToOne(() => Keyset_1.Keyset, keyset => keyset.kits, { cascade: true }),
     typeorm_1.JoinColumn(),
     __metadata("design:type", Keyset_1.Keyset)
 ], Kit.prototype, "keyset", void 0);

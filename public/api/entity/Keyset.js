@@ -58,12 +58,12 @@ __decorate([
 ], Keyset.prototype, "stem", void 0);
 __decorate([
     type_graphql_1.Field(() => [Kit_1.Kit], { nullable: true }),
-    typeorm_1.OneToMany(() => Kit_1.Kit, kit => kit.keyset, { cascade: true, onDelete: "CASCADE" }),
+    typeorm_1.OneToMany(() => Kit_1.Kit, kit => kit.keyset, { onDelete: "CASCADE", onUpdate: 'CASCADE' }),
     __metadata("design:type", Array)
 ], Keyset.prototype, "kits", void 0);
 __decorate([
     type_graphql_1.Field(() => [Color_1.Color], { nullable: true }),
-    typeorm_1.OneToMany(() => Color_1.Color, color => color.keyset, { cascade: true, onDelete: "CASCADE" }),
+    typeorm_1.OneToMany(() => Color_1.Color, color => color.keyset, { onDelete: "CASCADE", onUpdate: 'CASCADE' }),
     __metadata("design:type", Array)
 ], Keyset.prototype, "colors", void 0);
 __decorate([
@@ -172,7 +172,7 @@ __decorate([
     __metadata("design:type", Array)
 ], KeysetInput.prototype, "kits", void 0);
 __decorate([
-    type_graphql_1.Field(() => Color_1.ColorInput),
+    type_graphql_1.Field(() => Color_1.ColorInput, { nullable: true }),
     __metadata("design:type", Array)
 ], KeysetInput.prototype, "colors", void 0);
 __decorate([

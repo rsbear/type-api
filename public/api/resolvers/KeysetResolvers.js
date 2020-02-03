@@ -39,6 +39,7 @@ const uploader_1 = require("../uploader");
 const SearchInput_1 = require("../entity/SearchInput");
 const User_1 = require("../entity/User");
 const Keyset_1 = require("../entity/Keyset");
+const entity_1 = require("../entity");
 let KeysetResolvers = class KeysetResolvers {
     keysets() {
         return Keyset_1.Keyset.find({ relations: ['kits', 'maker', 'colors'] });
@@ -84,7 +85,25 @@ let KeysetResolvers = class KeysetResolvers {
     updateKeyset(id, data) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const rest = __rest(data, []);
+                const { kits, colors } = data, rest = __rest(data, ["kits", "colors"]);
+                const keyset = yield Keyset_1.Keyset.findOne({ where: { id }, relations: ['kits', 'colors'] });
+                if (!keyset)
+                    throw new Error("Failed");
+                for (let k of keyset.kits) {
+                    yield entity_1.Kit.delete(k);
+                }
+                for (let k of data.kits) {
+                    const newKit = yield entity_1.Kit.create(k).save();
+                    keyset.kits.push(newKit);
+                }
+                for (let c of keyset.colors) {
+                    yield entity_1.Color.delete(c);
+                }
+                for (let c of data.colors) {
+                    const newColor = yield entity_1.Color.create(c).save();
+                    keyset.colors.push(newColor);
+                }
+                keyset.save();
                 yield Keyset_1.Keyset.update(id, Object.assign({}, rest));
                 return true;
             }
@@ -94,6 +113,18 @@ let KeysetResolvers = class KeysetResolvers {
             }
         });
     }
+    updateKeysetStage(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            yield Keyset_1.Keyset.update(id, {
+                interestCheck: false,
+                market: true,
+                groupBuy: false,
+                groupBuySoon: false,
+                closed: false
+            });
+            return true;
+        });
+    }
     deleteKeyset(id) {
         return __awaiter(this, void 0, void 0, function* () {
             if (id) {
@@ -101,6 +132,22 @@ let KeysetResolvers = class KeysetResolvers {
                 return true;
             }
             return false;
+        });
+    }
+    kits() {
+        return __awaiter(this, void 0, void 0, function* () {
+            return entity_1.Kit.find({ relations: ['keyset'] });
+        });
+    }
+    deleteKit(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield entity_1.Kit.delete({ id });
+                return true;
+            }
+            catch (err) {
+                console.log(err);
+            }
         });
     }
 };
@@ -149,7 +196,27 @@ __decorate([
     __metadata("design:type", Function),
     __metadata("design:paramtypes", [String]),
     __metadata("design:returntype", Promise)
+], KeysetResolvers.prototype, "updateKeysetStage", null);
+__decorate([
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Arg("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
 ], KeysetResolvers.prototype, "deleteKeyset", null);
+__decorate([
+    type_graphql_1.Query(() => [entity_1.Kit]),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", Promise)
+], KeysetResolvers.prototype, "kits", null);
+__decorate([
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Arg("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], KeysetResolvers.prototype, "deleteKit", null);
 KeysetResolvers = __decorate([
     type_graphql_1.Resolver()
 ], KeysetResolvers);

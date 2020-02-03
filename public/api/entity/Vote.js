@@ -14,26 +14,29 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 const typeorm_1 = require("typeorm");
 const type_graphql_1 = require("type-graphql");
-const uniqid_1 = __importDefault(require("uniqid"));
 const User_1 = require("./User");
 const dayjs_1 = __importDefault(require("dayjs"));
 let Vote = class Vote extends typeorm_1.BaseEntity {
     constructor() {
         super(...arguments);
-        this.id = uniqid_1.default("vote_");
         this.expiration = dayjs_1.default().add(2, 'minute').format();
     }
 };
 __decorate([
     type_graphql_1.Field(),
-    typeorm_1.PrimaryColumn("varchar", { default: `${uniqid_1.default("vote_")}` }),
+    typeorm_1.PrimaryGeneratedColumn('uuid'),
     __metadata("design:type", String)
 ], Vote.prototype, "id", void 0);
 __decorate([
-    type_graphql_1.Field(),
-    typeorm_1.Column("text"),
+    type_graphql_1.Field({ nullable: true }),
+    typeorm_1.Column("text", { nullable: true }),
     __metadata("design:type", String)
 ], Vote.prototype, "editionId", void 0);
+__decorate([
+    type_graphql_1.Field({ nullable: true }),
+    typeorm_1.Column("text", { nullable: true }),
+    __metadata("design:type", String)
+], Vote.prototype, "kitId", void 0);
 __decorate([
     type_graphql_1.Field(),
     typeorm_1.Column(),

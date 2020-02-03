@@ -36,7 +36,7 @@ __decorate([
     __metadata("design:type", String)
 ], LoginResponse.prototype, "accessToken", void 0);
 __decorate([
-    type_graphql_1.Field(() => User_1.User),
+    type_graphql_1.Field(() => User_1.User, { nullable: true }),
     __metadata("design:type", User_1.User)
 ], LoginResponse.prototype, "user", void 0);
 LoginResponse = __decorate([
@@ -53,6 +53,7 @@ let UserResolvers = class UserResolvers {
                 'keyboards',
                 'votes',
                 'keyboardjoins',
+                'keyboardjoins.keyboard',
                 'keysetjoins',
                 'keysetjoins.keyset',
                 'follows',
@@ -114,32 +115,36 @@ let UserResolvers = class UserResolvers {
                 throw new Error("User found but that's not the magic word");
             }
             sendRefreshToken_1.sendRefreshToken(res, tokenGenerators_1.createRefreshToken(user));
+            yield Auth_1.Auth.delete({ id: auth.id });
             return {
                 accessToken: tokenGenerators_1.createAccessToken(user),
                 user
             };
         });
     }
-    signup(secret, email, username) {
+    signup(secret, email, username, { res }) {
         return __awaiter(this, void 0, void 0, function* () {
             try {
-                const authSecret = yield Auth_1.Auth.findOne({ where: { email } });
-                if (authSecret.secret === secret) {
-                    yield User_1.User.insert({
-                        email,
-                        username
-                    });
-                }
-                else {
+                const auth = yield Auth_1.Auth.findOne({ where: { email } });
+                if (auth.secret !== secret) {
                     console.log("secrets didnt match");
-                    return false;
+                    throw new Error("Fake news");
                 }
+                const user = yield User_1.User.create({
+                    email,
+                    username
+                }).save();
+                sendRefreshToken_1.sendRefreshToken(res, tokenGenerators_1.createRefreshToken(user));
+                yield Auth_1.Auth.delete({ id: auth.id });
+                return {
+                    accessToken: tokenGenerators_1.createAccessToken(user),
+                    user
+                };
             }
             catch (err) {
                 console.log(err);
-                return false;
+                throw new Error("failed at catch");
             }
-            return true;
         });
     }
     banUser(id) {
@@ -202,12 +207,13 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], UserResolvers.prototype, "login", null);
 __decorate([
-    type_graphql_1.Mutation(() => Boolean),
+    type_graphql_1.Mutation(() => LoginResponse),
     __param(0, type_graphql_1.Arg("secret")),
     __param(1, type_graphql_1.Arg("email")),
     __param(2, type_graphql_1.Arg("username")),
+    __param(3, type_graphql_1.Ctx()),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, String, String]),
+    __metadata("design:paramtypes", [String, String, String, Object]),
     __metadata("design:returntype", Promise)
 ], UserResolvers.prototype, "signup", null);
 __decorate([

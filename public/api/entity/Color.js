@@ -38,7 +38,7 @@ __decorate([
     __metadata("design:type", String)
 ], Color.prototype, "ral", void 0);
 __decorate([
-    typeorm_1.ManyToOne(() => Keyset_1.Keyset, keyset => keyset.colors, { onDelete: 'CASCADE' }),
+    typeorm_1.ManyToOne(() => Keyset_1.Keyset, keyset => keyset.colors, { cascade: true }),
     typeorm_1.JoinColumn(),
     __metadata("design:type", Keyset_1.Keyset)
 ], Color.prototype, "keyset", void 0);
