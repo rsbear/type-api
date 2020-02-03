@@ -75,9 +75,9 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
     //   : {
 
     host: process.env.TYPEORM_HOST,
-    username: process.env.TYPEORM_USERNAME || "doadmin",
+    username: process.env.TYPEORM_USERNAME,
     password: process.env.TYPEORM_PASSWORD,
-    database: process.env.TYPEORM_DATABASE || "defaultdb",
+    database: process.env.TYPEORM_DATABASE,
     port: 25060 || 5432,
     extra: {
       ssl: true
@@ -92,10 +92,6 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
 
   await createConnection(dbConfig)
-    .then(() => {
-      console.log("connected to db")
-      console.log(process.env.DB_URL)
-    })
     .catch((error: any) => {
       console.log(error)
     })
@@ -123,10 +119,9 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
   // const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000
 
-  app.listen({ port: process.env.PORT || 4000 }, () => {
+  app.listen({ port: process.env.NODE_ENV !== 'production' ? 4000 : process.env.PORT }, () => {
     console.log('🚀 ------ UP UP AND AWAY')
     console.log(process.env.NODE_ENV !== 'production' ? "In development mode" : "Production deployment")
-    console.log(process.env.DB_URL)
   })
 })();
 

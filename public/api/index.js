@@ -78,9 +78,9 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
         type: "postgres",
         entities: lodash_1.values(entities),
         host: process.env.TYPEORM_HOST,
-        username: process.env.TYPEORM_USERNAME || "doadmin",
+        username: process.env.TYPEORM_USERNAME,
         password: process.env.TYPEORM_PASSWORD,
-        database: process.env.TYPEORM_DATABASE || "defaultdb",
+        database: process.env.TYPEORM_DATABASE,
         port: 25060 || 5432,
         extra: {
             ssl: true
@@ -89,7 +89,8 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
         logging: false,
         logger: "file",
     };
-    yield typeorm_1.createConnection(dbConfig).catch((error) => {
+    yield typeorm_1.createConnection(dbConfig)
+        .catch((error) => {
         console.log(error);
     });
     const apolloServer = new apollo_server_express_1.ApolloServer({
@@ -111,9 +112,9 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
         context: ({ req, res }) => ({ req, res })
     });
     apolloServer.applyMiddleware({ app, cors: false });
-    const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000;
-    app.listen(PORT, () => {
+    app.listen({ port: process.env.NODE_ENV !== 'production' ? 4000 : process.env.PORT }, () => {
         console.log('🚀 ------ UP UP AND AWAY');
+        console.log(process.env.NODE_ENV !== 'production' ? "In development mode" : "Production deployment");
     });
 }))();
 //# sourceMappingURL=index.js.map

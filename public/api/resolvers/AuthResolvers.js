@@ -20,12 +20,16 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
 const type_graphql_1 = require("type-graphql");
 const rword_1 = require("rword");
 const Auth_1 = require("./../entity/Auth");
 const User_1 = require("./../entity/User");
 const SuccessResponse_1 = require("./../entity/SuccessResponse");
+const mailGunner_1 = __importDefault(require("../mailGunner"));
 let AuthResolvers = class AuthResolvers {
     auths() {
         return Auth_1.Auth.find();
@@ -75,6 +79,23 @@ let AuthResolvers = class AuthResolvers {
                 if (email) {
                     yield Auth_1.Auth.delete({ email: email });
                 }
+                const securityWord = rword_1.rword.generate(1, { length: 5 }).toString();
+                const data = {
+                    token: securityWord,
+                    email: user.email
+                };
+                const subjectTitle = "typefeel Login";
+                const content = `<div style="margin: 0 auto; max-width: 600px;">
+            <h1 style="margin-bottom: 30px;">typefeel</h1>
+          <h2>${data.token}</h2>
+            <p style="font-size: 18px;">Login with your token by clicking the link below.</p>
+            <a style="font-size: 16px; color: white; background-color: black; padding: 8px 16px; border-radius: 4px; text-decoration: none;" href="https://typefeel.com/auth/${encodeURIComponent(data.email)}&token=${data.token}">Log me in</a>
+            <br />
+            <br />
+            <p style="font-size: 18px;">Cheers, typefeel</p>
+          </div>
+        `;
+                mailGunner_1.default(user.email, subjectTitle, content);
                 yield Auth_1.Auth.insert({
                     email,
                     secret: rword_1.rword.generate(1, { length: 5 }).toString()
