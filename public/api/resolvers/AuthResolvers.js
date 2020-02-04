@@ -95,7 +95,7 @@ let AuthResolvers = class AuthResolvers {
             <p style="font-size: 18px;">Cheers, typefeel</p>
           </div>
         `;
-                mailGunner_1.default(user.email, subjectTitle, content);
+                yield mailGunner_1.default(user.email, subjectTitle, content);
                 yield Auth_1.Auth.insert({
                     email,
                     secret: data.token
