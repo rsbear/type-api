@@ -40,9 +40,31 @@ export class AuthResolvers {
         }
       }
 
+      const securityWord = rword.generate(1, { length: 5 }).toString();
+      const data = {
+        token: securityWord,
+        email: email
+      };
+
+      const subjectTitle = "typefeel Login";
+      const content = `<div style="margin: 0 auto; max-width: 600px;">
+            <h1 style="margin-bottom: 30px;">typefeel</h1>
+          <h2>${data.token}</h2>
+            <p style="font-size: 18px;">Login with your token by clicking the link below.</p>
+            <a style="font-size: 16px; color: white; background-color: black; padding: 8px 16px; border-radius: 4px; text-decoration: none;" href="https://typefeel.com/auth/${encodeURIComponent(
+        email
+      )}&token=${data.token}">Log me in</a>
+            <br />
+            <br />
+            <p style="font-size: 18px;">Cheers, typefeel</p>
+          </div>
+        `;
+
+      await mailGunner(email, subjectTitle, content);
+
       await Auth.insert({
         email,
-        secret: rword.generate(1, { length: 5 }).toString()
+        secret: data.token
       })
 
     } catch (err) {
