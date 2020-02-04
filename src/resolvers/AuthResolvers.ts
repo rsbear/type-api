@@ -46,7 +46,7 @@ export class AuthResolvers {
         email: email
       };
 
-      const subjectTitle = "typefeel Login";
+      const subjectTitle = "Magic word for typefeel.com";
       const content = `<div style="margin: 0 auto; max-width: 600px;">
             <h1 style="margin-bottom: 30px;">typefeel</h1>
           <h2>${data.token}</h2>
@@ -60,7 +60,7 @@ export class AuthResolvers {
           </div>
         `;
 
-      await mailGunner(email, subjectTitle, content);
+      mailGunner(email, subjectTitle, content);
 
       await Auth.insert({
         email,
@@ -103,7 +103,7 @@ export class AuthResolvers {
         email: user.email
       };
 
-      const subjectTitle = "typefeel Login";
+      const subjectTitle = "Magic word for typefeel";
       const content = `<div style="margin: 0 auto; max-width: 600px;">
             <h1 style="margin-bottom: 30px;">typefeel</h1>
           <h2>${data.token}</h2>
@@ -117,7 +117,7 @@ export class AuthResolvers {
           </div>
         `;
 
-      await mailGunner(user.email, subjectTitle, content);
+      mailGunner(user.email, subjectTitle, content);
 
       await Auth.insert({
         email,
