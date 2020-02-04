@@ -1,4 +1,4 @@
-import fetch from 'node-fetch'
+// import fetch from 'node-fetch'
 
 export function noSleepForHeroku() {
   const interval = 25;
