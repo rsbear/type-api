@@ -47,11 +47,26 @@ export class VoteResolvers {
         editionId: id,
         user
       });
-      const newPrice = edition.suggestedPrice === null ?
+      const newPrice = !edition.suggestedPrice ?
         Math.trunc(edition.price + (edition.price * .03))
         : Math.trunc(edition.suggestedPrice + (edition.suggestedPrice * .03))
       await Edition.update(id, { suggestedPrice: newPrice })
 
+      return true
+    } catch (err) {
+      console.log(err)
+      return false
+    }
+  }
+
+  @Mutation(() => Boolean)
+  async setSuggestedPriceNull(
+    @Arg("id") id: string
+  ) {
+    try {
+      await Edition.update(id, {
+        suggestedPrice: null
+      })
       return true
     } catch (err) {
       console.log(err)
@@ -94,7 +109,7 @@ export class VoteResolvers {
         editionId: id,
         user
       }).save()
-      const newPrice = edition.suggestedPrice === null ?
+      const newPrice = !edition.suggestedPrice ?
         Math.trunc(edition.price - (edition.price * .015))
         : Math.trunc(edition.suggestedPrice - (edition.suggestedPrice * .015))
       await Edition.update(id, { suggestedPrice: newPrice })
