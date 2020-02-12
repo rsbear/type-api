@@ -46,4 +46,4 @@ username, password, port, and database need to be whatever it is you set them to
 ### 
 
 ## Run it
-```yarn dev```
+```yarn install && yarn dev```
