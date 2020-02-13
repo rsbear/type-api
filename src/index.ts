@@ -28,12 +28,11 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 
 (async () => {
   const app = express()
-  app.enable('trust-proxy')
   app.use(cors({
-    // origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://typefeel.com',
-    origin: "https://typefeel.com",
+    origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://typefeel.com',
     credentials: true
   }))
+  app.set('trust-proxy', 1)
   app.use(cookieParser())
   app.get("/", (_req, res) => res.send("check 1 2"))
   app.post("/refresh_token", async (req, res) => {
