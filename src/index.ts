@@ -23,7 +23,6 @@ import { JoinKeyboardResolver } from './resolvers/JoinKeyboardResolver';
 import { JoinKeysetResolver } from './resolvers/JoinKeysetResolver';
 import { PostResolver } from './resolvers/PostResolver';
 import { FollowResolvers } from './resolvers/FollowResolvers';
-import { noSleepForHeroku } from './noSleepForHeroku';
 
 
 
@@ -118,8 +117,6 @@ import { noSleepForHeroku } from './noSleepForHeroku';
 
   apolloServer.applyMiddleware({ app, cors: false });
 
-  // const PORT = process.env.NODE_ENV !== "production" ? 4000 : 5000
-  noSleepForHeroku()
 
   app.listen({ port: process.env.NODE_ENV !== 'production' ? 4000 : process.env.PORT }, () => {
     console.log('🚀 ------ UP UP AND AWAY')
