@@ -29,7 +29,7 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
 (async () => {
   const app = express()
   app.use(cors({
-    origin: process.env.NODE_ENV !== "production" ? 'http://localhost:3000' : 'https://typefeel.com',
+    origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://typefeel.com',
     credentials: true
   }))
   app.use(cookieParser())
