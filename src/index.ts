@@ -30,7 +30,8 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   const app = express()
   app.enable('trust-proxy')
   app.use(cors({
-    origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://typefeel.com',
+    // origin: process.env.NODE_ENV !== 'production' ? 'http://localhost:3000' : 'https://typefeel.com',
+    origin: "https://typefeel.com",
     credentials: true
   }))
   app.use(cookieParser())
