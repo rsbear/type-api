@@ -35,7 +35,6 @@ import { FollowResolvers } from './resolvers/FollowResolvers';
   app.use(cookieParser())
   app.get("/", (_req, res) => res.send("check 1 2"))
   app.post("/refresh_token", async (req, res) => {
-    res.send("refresh tokens")
     const token = req.cookies.rfs
     console.log(`token ${token}`)
     if (!token) {
