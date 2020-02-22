@@ -7,7 +7,7 @@ import { processUploads } from "../uploader";
 import { SearchInput } from "../entity/SearchInput";
 import { User } from "../entity/User";
 import { Keyset, KeysetInput } from "../entity/Keyset";
-import { Kit, Color } from "../entity";
+import { Kit, Color, SuccessResponse } from "../entity";
 // import { getConnection } from "typeorm";
 // import { Kit } from "../entity";
 
@@ -45,17 +45,17 @@ export class KeysetResolvers {
     }
   }
 
-  @Mutation(() => Boolean)
+  @Mutation(() => SuccessResponse)
   @UseMiddleware(checkAuth)
   async makeKeyset(
     @Ctx() { payload }: AppContext,
     @Arg("data", () => KeysetInput) data: any,
     @Arg("images", () => [GraphQLUpload]) images: any,
-  ) {
+  ): Promise<SuccessResponse> {
     try {
       const user = await User.findOne(payload!.userId);
       const { results600, results800, results1500, resultsRaw } = await processUploads(images)
-      await Keyset.create({
+      const keyset = await Keyset.create({
         ...data,
         maker: user,
         images600: results600,
@@ -63,10 +63,16 @@ export class KeysetResolvers {
         images1500: results1500,
         imagesRaw: resultsRaw,
       }).save()
-      return true
+      return {
+        success: true,
+        message: keyset.shortId
+      }
     } catch (err) {
       console.log(err)
-      return false
+      return {
+        success: false,
+        message: "Something went wrong"
+      }
     }
   };
 

@@ -27,6 +27,10 @@ export class Keyset extends BaseEntity {
   @Column("text")
   name: string
 
+  @Field({ nullable: true })
+  @Column("text", { nullable: true })
+  manufacturer: string;
+
   @Field()
   @Column("text")
   profile: string
@@ -118,6 +122,9 @@ export class Keyset extends BaseEntity {
 export class KeysetInput implements Partial<Keyset> {
   @Field()
   name: string
+
+  @Field()
+  manufacturer: string
 
   @Field()
   profile: string
