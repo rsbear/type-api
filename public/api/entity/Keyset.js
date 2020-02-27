@@ -47,6 +47,11 @@ __decorate([
     __metadata("design:type", String)
 ], Keyset.prototype, "name", void 0);
 __decorate([
+    type_graphql_1.Field({ nullable: true }),
+    typeorm_1.Column("text", { nullable: true }),
+    __metadata("design:type", String)
+], Keyset.prototype, "manufacturer", void 0);
+__decorate([
     type_graphql_1.Field(),
     typeorm_1.Column("text"),
     __metadata("design:type", String)
@@ -159,6 +164,10 @@ __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)
 ], KeysetInput.prototype, "name", void 0);
+__decorate([
+    type_graphql_1.Field(),
+    __metadata("design:type", String)
+], KeysetInput.prototype, "manufacturer", void 0);
 __decorate([
     type_graphql_1.Field(),
     __metadata("design:type", String)

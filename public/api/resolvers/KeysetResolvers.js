@@ -72,12 +72,18 @@ let KeysetResolvers = class KeysetResolvers {
             try {
                 const user = yield User_1.User.findOne(payload.userId);
                 const { results600, results800, results1500, resultsRaw } = yield uploader_1.processUploads(images);
-                yield Keyset_1.Keyset.create(Object.assign(Object.assign({}, data), { maker: user, images600: results600, images800: results800, images1500: results1500, imagesRaw: resultsRaw })).save();
-                return true;
+                const keyset = yield Keyset_1.Keyset.create(Object.assign(Object.assign({}, data), { maker: user, images600: results600, images800: results800, images1500: results1500, imagesRaw: resultsRaw })).save();
+                return {
+                    success: true,
+                    message: keyset.shortId
+                };
             }
             catch (err) {
                 console.log(err);
-                return false;
+                return {
+                    success: false,
+                    message: "Something went wrong"
+                };
             }
         });
     }
@@ -172,7 +178,7 @@ __decorate([
     __metadata("design:returntype", Promise)
 ], KeysetResolvers.prototype, "sortKeysets", null);
 __decorate([
-    type_graphql_1.Mutation(() => Boolean),
+    type_graphql_1.Mutation(() => entity_1.SuccessResponse),
     type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
     __param(0, type_graphql_1.Ctx()),
     __param(1, type_graphql_1.Arg("data", () => Keyset_1.KeysetInput)),

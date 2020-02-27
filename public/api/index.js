@@ -43,12 +43,20 @@ const JoinKeyboardResolver_1 = require("./resolvers/JoinKeyboardResolver");
 const JoinKeysetResolver_1 = require("./resolvers/JoinKeysetResolver");
 const PostResolver_1 = require("./resolvers/PostResolver");
 const FollowResolvers_1 = require("./resolvers/FollowResolvers");
+const origin = process.env.NODE_ENV !== "production"
+    ? "http://localhost:3000"
+    : "https://typefeel.com";
 (() => __awaiter(void 0, void 0, void 0, function* () {
     const app = express_1.default();
     app.use(cors_1.default({
-        origin: process.env.NODE_ENV !== "production" ? 'http://localhost:3000' : 'https://typefeel.com',
+        origin: origin,
         credentials: true
     }));
+    app.use(function (_, res, next) {
+        res.header("Access-Control-Allow-Origin", origin);
+        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     app.use(cookie_parser_1.default());
     app.get("/", (_req, res) => res.send("check 1 2"));
     app.post("/refresh_token", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
@@ -87,10 +95,9 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
         },
         synchronize: true,
         logging: false,
-        logger: "file",
+        logger: "file"
     };
-    yield typeorm_1.createConnection(dbConfig)
-        .catch((error) => {
+    yield typeorm_1.createConnection(dbConfig).catch((error) => {
         console.log(error);
     });
     const apolloServer = new apollo_server_express_1.ApolloServer({
@@ -106,15 +113,17 @@ const FollowResolvers_1 = require("./resolvers/FollowResolvers");
                 JoinKeyboardResolver_1.JoinKeyboardResolver,
                 JoinKeysetResolver_1.JoinKeysetResolver,
                 PostResolver_1.PostResolver,
-                FollowResolvers_1.FollowResolvers,
+                FollowResolvers_1.FollowResolvers
             ]
         }),
         context: ({ req, res }) => ({ req, res })
     });
     apolloServer.applyMiddleware({ app, cors: false });
-    app.listen({ port: process.env.NODE_ENV !== 'production' ? 4000 : process.env.PORT }, () => {
-        console.log('🚀 ------ UP UP AND AWAY');
-        console.log(process.env.NODE_ENV !== 'production' ? "In development mode" : "Production deployment");
+    app.listen({ port: process.env.NODE_ENV !== "production" ? 4000 : process.env.PORT }, () => {
+        console.log("🚀 ------ UP UP AND AWAY");
+        console.log(process.env.NODE_ENV !== "production"
+            ? "In development mode"
+            : "Production deployment");
     });
 }))();
 //# sourceMappingURL=index.js.map

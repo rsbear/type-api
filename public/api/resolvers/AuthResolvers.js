@@ -51,9 +51,26 @@ let AuthResolvers = class AuthResolvers {
                         message: 'Username taken, try a different one.'
                     };
                 }
+                const securityWord = rword_1.rword.generate(1, { length: 5 }).toString();
+                const data = {
+                    token: securityWord,
+                    email: email
+                };
+                const subjectTitle = "Magic word for typefeel.com";
+                const content = `<div style="margin: 0 auto; max-width: 600px;">
+            <h1 style="margin-bottom: 30px;">typefeel</h1>
+          <h2>${data.token}</h2>
+            <p style="font-size: 18px;">Login with your token by clicking the link below.</p>
+            <a style="font-size: 16px; color: white; background-color: black; padding: 8px 16px; border-radius: 4px; text-decoration: none;" href="https://typefeel.com/auth/${encodeURIComponent(email)}&token=${data.token}">Log me in</a>
+            <br />
+            <br />
+            <p style="font-size: 18px;">Cheers, typefeel</p>
+          </div>
+        `;
+                mailGunner_1.default(email, subjectTitle, content);
                 yield Auth_1.Auth.insert({
                     email,
-                    secret: rword_1.rword.generate(1, { length: 5 }).toString()
+                    secret: data.token
                 });
             }
             catch (err) {
@@ -84,7 +101,7 @@ let AuthResolvers = class AuthResolvers {
                     token: securityWord,
                     email: user.email
                 };
-                const subjectTitle = "typefeel Login";
+                const subjectTitle = "Magic word for typefeel";
                 const content = `<div style="margin: 0 auto; max-width: 600px;">
             <h1 style="margin-bottom: 30px;">typefeel</h1>
           <h2>${data.token}</h2>
@@ -95,7 +112,7 @@ let AuthResolvers = class AuthResolvers {
             <p style="font-size: 18px;">Cheers, typefeel</p>
           </div>
         `;
-                yield mailGunner_1.default(user.email, subjectTitle, content);
+                mailGunner_1.default(user.email, subjectTitle, content);
                 yield Auth_1.Auth.insert({
                     email,
                     secret: data.token

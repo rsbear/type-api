@@ -47,7 +47,7 @@ __decorate([
 __decorate([
     type_graphql_1.Field(() => type_graphql_1.Int, { nullable: true }),
     typeorm_1.Column("int", { nullable: true }),
-    __metadata("design:type", Number)
+    __metadata("design:type", Object)
 ], Edition.prototype, "suggestedPrice", void 0);
 __decorate([
     type_graphql_1.Field(() => [String], { nullable: true }),

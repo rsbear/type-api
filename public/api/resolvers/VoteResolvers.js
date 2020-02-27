@@ -60,10 +60,24 @@ let VoteResolvers = class VoteResolvers {
                     editionId: id,
                     user
                 });
-                const newPrice = edition.suggestedPrice === null ?
+                const newPrice = !edition.suggestedPrice ?
                     Math.trunc(edition.price + (edition.price * .03))
                     : Math.trunc(edition.suggestedPrice + (edition.suggestedPrice * .03));
                 yield Edition_1.Edition.update(id, { suggestedPrice: newPrice });
+                return true;
+            }
+            catch (err) {
+                console.log(err);
+                return false;
+            }
+        });
+    }
+    setSuggestedPriceNull(id) {
+        return __awaiter(this, void 0, void 0, function* () {
+            try {
+                yield Edition_1.Edition.update(id, {
+                    suggestedPrice: null
+                });
                 return true;
             }
             catch (err) {
@@ -100,7 +114,7 @@ let VoteResolvers = class VoteResolvers {
                     editionId: id,
                     user
                 }).save();
-                const newPrice = edition.suggestedPrice === null ?
+                const newPrice = !edition.suggestedPrice ?
                     Math.trunc(edition.price - (edition.price * .015))
                     : Math.trunc(edition.suggestedPrice - (edition.suggestedPrice * .015));
                 yield Edition_1.Edition.update(id, { suggestedPrice: newPrice });
@@ -219,6 +233,13 @@ __decorate([
     __metadata("design:paramtypes", [Object, String]),
     __metadata("design:returntype", Promise)
 ], VoteResolvers.prototype, "voteKeyboardUp", null);
+__decorate([
+    type_graphql_1.Mutation(() => Boolean),
+    __param(0, type_graphql_1.Arg("id")),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", [String]),
+    __metadata("design:returntype", Promise)
+], VoteResolvers.prototype, "setSuggestedPriceNull", null);
 __decorate([
     type_graphql_1.Mutation(() => Boolean),
     type_graphql_1.UseMiddleware(checkAuth_1.checkAuth),
