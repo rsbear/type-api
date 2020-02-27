@@ -37,7 +37,7 @@ const origin =
       credentials: true
     })
   );
-  app.use(function(req, res, next) {
+  app.use(function(_, res, next) {
     res.header("Access-Control-Allow-Origin", origin); // update to match the domain you will make the request from
     res.header(
       "Access-Control-Allow-Headers",
