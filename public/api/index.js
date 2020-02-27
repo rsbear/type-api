@@ -52,11 +52,6 @@ const origin = process.env.NODE_ENV !== "production"
         origin: origin,
         credentials: true
     }));
-    app.use(function (_, res, next) {
-        res.header("Access-Control-Allow-Origin", origin);
-        res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-        next();
-    });
     app.use(cookie_parser_1.default());
     app.get("/", (_req, res) => res.send("check 1 2"));
     app.post("/refresh_token", (req, res) => __awaiter(void 0, void 0, void 0, function* () {

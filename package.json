@@ -20,7 +20,7 @@
     "start": "yarn serve",
     "serve": "NODE_ENV=production node ./public/api/index.js",
     "cleanbuild": "rm -rf public",
-    "deploy": "yarn cleanbuild && yarn build && now",
+    "deploy": "yarn cleanbuild && yarn build && git add . && git commit -m 'deploy' && git push heroku master",
     "watch-ts": "tsc -w"
   },
   "dependencies": {
