@@ -6,7 +6,7 @@ import {
   ObjectType,
   Field,
   Ctx,
-  UseMiddleware,
+  UseMiddleware
 } from "type-graphql";
 import { User } from "./../entity/User";
 import { AppContext } from "./../AppContext";
@@ -25,8 +25,6 @@ class LoginResponse {
   user: User;
 }
 
-
-
 @Resolver()
 export class UserResolvers {
   @Query(() => String)
@@ -40,15 +38,15 @@ export class UserResolvers {
   users() {
     return User.find({
       relations: [
-        'keyboards',
-        'votes',
-        'keyboardjoins',
-        'keyboardjoins.keyboard',
-        'keysetjoins',
-        'keysetjoins.keyset',
-        'follows',
-        'follows.keyboard',
-        'follows.keyset'
+        "keyboards",
+        "votes",
+        "keyboardjoins",
+        "keyboardjoins.keyboard",
+        "keysetjoins",
+        "keysetjoins.keyset",
+        "follows",
+        "follows.keyboard",
+        "follows.keyset"
       ]
     });
   }
@@ -60,22 +58,23 @@ export class UserResolvers {
     if (!authorization) {
       return null;
     }
+    console.log(authorization);
 
     try {
       const token = authorization.split(" ")[1];
       const payload: any = verify(token, process.env.ACCESS_TOKEN_SECRET!);
       return User.findOne(payload.userId, {
         relations: [
-          'keyboardjoins',
-          'keyboardjoins.keyboard',
-          'keyboards',
-          'keyboards.joins',
-          'keysetjoins',
-          'keysets',
-          'keysets.joins',
-          'follows',
-          'follows.keyboard',
-          'follows.keyset'
+          "keyboardjoins",
+          "keyboardjoins.keyboard",
+          "keyboards",
+          "keyboards.joins",
+          "keysetjoins",
+          "keysets",
+          "keysets.joins",
+          "follows",
+          "follows.keyboard",
+          "follows.keyset"
         ]
       });
     } catch (err) {
@@ -114,12 +113,12 @@ export class UserResolvers {
     }
 
     if (secret !== auth.secret) {
-      throw new Error("User found but that's not the magic word")
+      throw new Error("User found but that's not the magic word");
     }
 
     sendRefreshToken(res, createRefreshToken(user));
 
-    await Auth.delete({ id: auth.id })
+    await Auth.delete({ id: auth.id });
 
     return {
       accessToken: createAccessToken(user),
@@ -135,11 +134,11 @@ export class UserResolvers {
     @Ctx() { res }: AppContext
   ): Promise<LoginResponse> {
     try {
-      const auth: any = await Auth.findOne({ where: { email } })
+      const auth: any = await Auth.findOne({ where: { email } });
 
       if (auth.secret !== secret) {
-        console.log("secrets didnt match")
-        throw new Error("Fake news")
+        console.log("secrets didnt match");
+        throw new Error("Fake news");
       }
 
       const user = await User.create({
@@ -149,31 +148,29 @@ export class UserResolvers {
 
       sendRefreshToken(res, createRefreshToken(user));
 
-      await Auth.delete({ id: auth.id })
+      await Auth.delete({ id: auth.id });
 
       return {
         accessToken: createAccessToken(user),
         user
       };
-
     } catch (err) {
       console.log(err);
-      throw new Error("failed at catch")
+      throw new Error("failed at catch");
     }
   }
 
   @Mutation(() => Boolean)
-  async banUser(
-    @Arg("id") id: string,
-  ) {
+  async banUser(@Arg("id") id: string) {
     try {
       await User.delete({
         id: id
-      })
+      });
     } catch (err) {
-      console.log(err)
-      return false
+      console.log(err);
+      return false;
     }
-    return true
+    return true;
   }
 }
+

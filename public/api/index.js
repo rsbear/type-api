@@ -55,7 +55,7 @@ const origin = process.env.NODE_ENV !== "production"
     app.use(cookie_parser_1.default());
     app.get("/", (_req, res) => res.send("check 1 2"));
     app.post("/refresh_token", (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-        const token = req.cookies.rfs;
+        const token = req.cookies.typefeel_sesh;
         if (!token) {
             return res.send({ ok: false, accessToken: "" });
         }

@@ -40,7 +40,7 @@ const origin =
   app.use(cookieParser());
   app.get("/", (_req, res) => res.send("check 1 2"));
   app.post("/refresh_token", async (req, res) => {
-    const token = req.cookies.rfs;
+    const token = req.cookies.typefeel_sesh;
     if (!token) {
       return res.send({ ok: false, accessToken: "" });
     }

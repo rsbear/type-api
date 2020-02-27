@@ -50,15 +50,15 @@ let UserResolvers = class UserResolvers {
     users() {
         return User_1.User.find({
             relations: [
-                'keyboards',
-                'votes',
-                'keyboardjoins',
-                'keyboardjoins.keyboard',
-                'keysetjoins',
-                'keysetjoins.keyset',
-                'follows',
-                'follows.keyboard',
-                'follows.keyset'
+                "keyboards",
+                "votes",
+                "keyboardjoins",
+                "keyboardjoins.keyboard",
+                "keysetjoins",
+                "keysetjoins.keyset",
+                "follows",
+                "follows.keyboard",
+                "follows.keyset"
             ]
         });
     }
@@ -67,21 +67,22 @@ let UserResolvers = class UserResolvers {
         if (!authorization) {
             return null;
         }
+        console.log(authorization);
         try {
             const token = authorization.split(" ")[1];
             const payload = jsonwebtoken_1.verify(token, process.env.ACCESS_TOKEN_SECRET);
             return User_1.User.findOne(payload.userId, {
                 relations: [
-                    'keyboardjoins',
-                    'keyboardjoins.keyboard',
-                    'keyboards',
-                    'keyboards.joins',
-                    'keysetjoins',
-                    'keysets',
-                    'keysets.joins',
-                    'follows',
-                    'follows.keyboard',
-                    'follows.keyset'
+                    "keyboardjoins",
+                    "keyboardjoins.keyboard",
+                    "keyboards",
+                    "keyboards.joins",
+                    "keysetjoins",
+                    "keysets",
+                    "keysets.joins",
+                    "follows",
+                    "follows.keyboard",
+                    "follows.keyset"
                 ]
             });
         }
