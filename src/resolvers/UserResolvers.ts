@@ -12,7 +12,7 @@ import { User } from "./../entity/User";
 import { AppContext } from "./../AppContext";
 import { createRefreshToken, createAccessToken } from "./../tokenGenerators";
 import { checkAuth } from "./../checkAuth";
-import { sendRefreshToken, sendRefreshToken2 } from "./../sendRefreshToken";
+import { sendRefreshToken } from "./../sendRefreshToken";
 import { getConnection } from "typeorm";
 import { verify } from "jsonwebtoken";
 import { Auth } from "./../entity/Auth";
@@ -148,9 +148,6 @@ export class UserResolvers {
       }).save();
 
       sendRefreshToken(res, createRefreshToken(user));
-      if (process.env.NODE_ENV === 'production') {
-        sendRefreshToken2(res, createRefreshToken(user))
-      }
 
       await Auth.delete({ id: auth.id })
 
