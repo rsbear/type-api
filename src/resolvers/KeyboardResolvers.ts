@@ -25,6 +25,30 @@ export class KeyboardResolvers {
     })
   }
 
+  @Query(() => Keyboard)
+  async keyboardPosts(@Arg("shortId") shortId: string, @Arg("limit") limit: number) {
+    try {
+      let keyboard = await Keyboard.findOne({
+        where: { shortId },
+        relations: ['posts', 'posts.user'],
+      })
+
+      if (!keyboard) throw Error("Could not find keyboard")
+
+      const { posts, ...rest } = keyboard
+      const limitedPosts = keyboard.posts.slice(0, limit)
+
+
+      return {
+        ...rest,
+        posts: limitedPosts
+      }
+    } catch (err) {
+      console.log(err)
+      throw Error("failed in keyboard posts catch block")
+    }
+  }
+
   @Query(() => [Keyboard])
   async sortKeyboards(
     @Arg("where") where: SearchInput

@@ -58,7 +58,6 @@ export class UserResolvers {
     if (!authorization) {
       return null;
     }
-    console.log(authorization);
 
     try {
       const token = authorization.split(" ")[1];
