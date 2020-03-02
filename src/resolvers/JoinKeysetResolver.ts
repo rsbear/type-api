@@ -22,6 +22,7 @@ export class JoinKeysetResolver {
     try {
       const keyset = await Keyset.findOne({ id })
       const user = await User.findOne(payload!.userId)
+      console.log(data)
 
       await JoinKeyset.insert({
         ...data,

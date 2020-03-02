@@ -8,7 +8,7 @@ import { Keyset } from "./Keyset";
 @Entity("joinkeysets")
 export class JoinKeyset extends BaseEntity {
   @Field()
-  @PrimaryColumn("varchar", { default: `${uniqid("join_")}` })
+  @PrimaryColumn({ default: `${uniqid("join_")}` })
   id: string = uniqid("join_");
 
   @Field()
