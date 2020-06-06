@@ -26,7 +26,7 @@
   "dependencies": {
     "@jorgeferrero/stream-to-buffer": "^1.0.0",
     "@sendgrid/mail": "^6.5.1",
-    "apollo-server-express": "^2.9.7",
+    "apollo-server-express": "^2.14.2",
     "aws-sdk": "^2.568.0",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
