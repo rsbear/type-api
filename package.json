@@ -42,7 +42,7 @@
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.15",
     "node-fetch": "^2.6.0",
-    "nodemailer": "^6.4.2",
+    "nodemailer": "^6.4.16",
     "nodemailer-mailgun-transport": "^2.0.0",
     "now-storage-v2": "^2.0.2",
     "pg": "^7.12.1",
